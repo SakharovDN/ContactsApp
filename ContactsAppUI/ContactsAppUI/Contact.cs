@@ -43,6 +43,10 @@ namespace ContactsAppUI
             }
         }
 
+        private PhoneNumber _number = new PhoneNumber();
+
+        public PhoneNumber Number { get; set; }
+
         private DateTime _birthday = new DateTime();
         
         public DateTime Birthday

@@ -2,7 +2,7 @@
 
 namespace ContactsAppUI
 {
-    internal class PhoneNumber
+    public class PhoneNumber
     {
         private long _number;
 
