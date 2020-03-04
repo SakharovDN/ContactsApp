@@ -15,11 +15,12 @@ namespace ContactsAppUI
         public MainForm()
         {
             InitializeComponent();
+            new ProjectManager().SaveToFile(null);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
