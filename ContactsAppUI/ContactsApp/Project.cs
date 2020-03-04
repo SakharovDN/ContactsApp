@@ -8,6 +8,6 @@ namespace ContactsAppUI
 {
     public class Project
     {
-        private List<Contact> contacts;
+        public List<Contact> Contacts { get; set; }
     }
 }

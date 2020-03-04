@@ -12,10 +12,10 @@ namespace ContactsAppUI
 
             set
             {
-                if (Convert.ToString(value).Length != 11)
-                    throw new Exception("Номер должен состоять из 11 цифр");
+                if (value.ToString().Length != 11)
+                    throw new ArgumentException("Номер должен состоять из 11 цифр");
                 else if (value / 10000000000 != 7)
-                    throw new Exception("Номер должен начинаться с цифры 7");
+                    throw new ArgumentException("Номер должен начинаться с цифры 7");
                 else
                     _number = value;
             }

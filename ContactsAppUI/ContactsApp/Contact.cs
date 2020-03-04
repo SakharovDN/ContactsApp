@@ -3,9 +3,14 @@ using System.Globalization;
 
 namespace ContactsAppUI
 {
-    public class Contact
+    public class Contact : ICloneable
     {
         private string _surname;
+        private string _name;
+        private PhoneNumber _number = new PhoneNumber();
+        private DateTime _birthday = new DateTime();
+        private string _email;
+        private string _iDVK;
 
         public string Surname
         {
@@ -15,7 +20,7 @@ namespace ContactsAppUI
             {
                 if (value.Length > 50)
                 {
-                    throw new Exception("Фамилия не должна превышать 50 символов");
+                    throw new ArgumentException("Фамилия не должна превышать 50 символов");
                 }
                 else
                     _surname = value;
@@ -23,8 +28,6 @@ namespace ContactsAppUI
                 _surname = ti.ToTitleCase(_surname);
             }
         }
-
-        private string _name;
 
         public string Name
         {
@@ -34,7 +37,7 @@ namespace ContactsAppUI
             {
                 if (value.Length > 50)
                 {
-                    throw new Exception("Фамилия не должна превышать 50 символов");
+                    throw new ArgumentException("Фамилия не должна превышать 50 символов");
                 }
                 else
                     _name = value;
@@ -43,12 +46,8 @@ namespace ContactsAppUI
             }
         }
 
-        private PhoneNumber _number = new PhoneNumber();
-
         public PhoneNumber Number { get; set; }
 
-        private DateTime _birthday = new DateTime();
-        
         public DateTime Birthday
         {
             get { return _birthday; }
@@ -56,18 +55,14 @@ namespace ContactsAppUI
             {
                 DateTime dateFrom = new DateTime(1900, 01, 01);
                 if (value > DateTime.Today && value < dateFrom)
-                    throw new Exception("Дата рождения не корректна");
+                    throw new ArgumentException("Дата рождения не корректна");
                 else
                     _birthday = value;
 
             }
         }
 
-        private string _email;
-
         public string Email { get; set; }
-
-        private string _iDVK;
 
         public string IDVK
         {
@@ -77,12 +72,23 @@ namespace ContactsAppUI
             {
                 if (value.Length > 15)
                 {
-                    throw new Exception("Фамилия не должна превышать 50 символов");
+                    throw new ArgumentException("IDVK не должен превышать 15 символов");
                 }
                 else
                     _iDVK = value;
             }
         }
 
+        public object Clone()
+        {
+            Contact contact = new Contact();
+            contact.Surname = this.Surname;
+            contact.Name = this.Name;
+            contact.Number = this.Number;
+            contact.Birthday = this.Birthday;
+            contact.Email = this.Email;
+            contact.IDVK = this.IDVK;
+            return contact;
+        }
     }
 }
