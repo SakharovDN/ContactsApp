@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ContactsAppUI
 {
-    public class ProjectManager
+    public static class ProjectManager
     {
-        string path = @"d:\ContactsApp.notes";
-        public Project LoadFromFile()
+        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
+        public static Project LoadFromFile()
         {
             Project project = null;
             JsonSerializer serializer = new JsonSerializer();
@@ -23,7 +23,7 @@ namespace ContactsAppUI
             return project;
         }
 
-        public void SaveToFile(Project project)
+        public static void SaveToFile(Project project)
         {
             if (!File.Exists(path))
                 using (FileStream fs = File.Create(path)) { }
