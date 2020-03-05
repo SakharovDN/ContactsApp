@@ -2,10 +2,16 @@
 
 namespace ContactsAppUI
 {
+    /// <summary>
+    /// Класс номера телефона, хранящий информацию о номере телефона
+    /// </summary>
     public class PhoneNumber
     {
         private long _number;
 
+        /// <summary>
+        /// Задает и возвращает номер телефона
+        /// </summary>
         public long Number
         {
             get { return _number; }

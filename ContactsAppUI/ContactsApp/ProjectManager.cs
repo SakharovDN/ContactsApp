@@ -8,9 +8,16 @@ using System.Threading.Tasks;
 
 namespace ContactsAppUI
 {
+    /// <summary>
+    /// Класс менеджера проекта, позволяющий сохранить в файл или загрузить из файла информацию о всех контактах
+    /// </summary>
     public static class ProjectManager
     {
         private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
+
+        /// <summary>
+        /// Метод загрузки информации о всех контактах из файла
+        /// </summary>
         public static Project LoadFromFile()
         {
             Project project = null;
@@ -23,6 +30,9 @@ namespace ContactsAppUI
             return project;
         }
 
+        /// <summary>
+        /// Метод сохранения информации о всех контактах в файл
+        /// </summary>
         public static void SaveToFile(Project project)
         {
             if (!File.Exists(path))

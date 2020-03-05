@@ -3,6 +3,10 @@ using System.Globalization;
 
 namespace ContactsAppUI
 {
+    /// <summary>
+    /// Класс контакта, хранящий информацию о фамилии, имени,
+    /// номере телефона, дне рождения, E-mal'a и idVK
+    /// </summary>
     public class Contact : ICloneable
     {
         private string _surname;
@@ -11,7 +15,11 @@ namespace ContactsAppUI
         private DateTime _birthday = new DateTime();
         private string _email;
         private string _iDVK;
+        private readonly TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 
+        /// <summary>
+        /// Возвращает и задает фамилию
+        /// </summary>
         public string Surname
         {
             get { return _surname; }
@@ -24,11 +32,13 @@ namespace ContactsAppUI
                 }
                 else
                     _surname = value;
-                TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-                _surname = ti.ToTitleCase(_surname);
+                _surname = FirstUppercaseLetter.ToTitleCase(_surname);
             }
         }
 
+        /// <summary>
+        /// Возвращает и задает имя
+        /// </summary>
         public string Name
         {
             get { return _name; }
@@ -41,11 +51,13 @@ namespace ContactsAppUI
                 }
                 else
                     _name = value;
-                TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-                _name = ti.ToTitleCase(_name);
+                _name = FirstUppercaseLetter.ToTitleCase(_name);
             }
         }
 
+        /// <summary>
+        /// Возвращает и задает номер телефона
+        /// </summary>
         public PhoneNumber Number { get; set; }
 
         public DateTime Birthday
@@ -62,8 +74,14 @@ namespace ContactsAppUI
             }
         }
 
+        /// <summary>
+        /// Возвращает и задает E-mail
+        /// </summary>
         public string Email { get; set; }
 
+        /// <summary>
+        /// Возвращает и задает idVk
+        /// </summary>
         public string IDVK
         {
             get { return _iDVK; }
@@ -79,6 +97,9 @@ namespace ContactsAppUI
             }
         }
 
+        /// <summary>
+        /// Метод, выполняющий клонирование контакта
+        /// </summary>
         public object Clone()
         {
             Contact contact = new Contact();
