@@ -1,4 +1,4 @@
-﻿namespace ContactsAppUI
+﻿namespace ContactsApp
 {
     partial class MainForm
     {

@@ -11,14 +11,14 @@ namespace ContactsApp
     /// <summary>
     /// Класс менеджера проекта, позволяющий сохранить в файл или загрузить из файла информацию о всех контактах
     /// </summary>
-    public static class ProjectManager
+    public class ProjectManager
     {
         private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
 
         /// <summary>
         /// Метод загрузки информации о всех контактах из файла
         /// </summary>
-        public static Project LoadFromFile()
+        public Project LoadFromFile()
         {
             Project project = null;
             JsonSerializer serializer = new JsonSerializer();
@@ -33,7 +33,7 @@ namespace ContactsApp
         /// <summary>
         /// Метод сохранения информации о всех контактах в файл
         /// </summary>
-        public static void SaveToFile(Project project)
+        public void SaveToFile(Project project)
         {
             if (!File.Exists(path))
                 using (FileStream fs = File.Create(path)) { }

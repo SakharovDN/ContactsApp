@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     public partial class MainForm : Form
     {
@@ -19,7 +19,6 @@ namespace ContactsAppUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
         }
     }
 }
