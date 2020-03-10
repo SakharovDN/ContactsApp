@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Класс проекта, хранящий информацию о всех контактах

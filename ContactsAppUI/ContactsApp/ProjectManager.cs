@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Класс менеджера проекта, позволяющий сохранить в файл или загрузить из файла информацию о всех контактах

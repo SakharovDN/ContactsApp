@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Класс контакта, хранящий информацию о фамилии, имени,
@@ -9,11 +9,29 @@ namespace ContactsAppUI
     /// </summary>
     public class Contact : ICloneable
     {
+        /// <summary>
+        /// Фамилия
+        /// </summary>
         private string _surname;
+        /// <summary>
+        /// Имя
+        /// </summary>
         private string _name;
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
         private PhoneNumber _number = new PhoneNumber();
+        /// <summary>
+        /// День рождения
+        /// </summary>
         private DateTime _birthday = new DateTime();
+        /// <summary>
+        /// E-mail
+        /// </summary>
         private string _email;
+        /// <summary>
+        /// idVK
+        /// </summary>
         private string _iDVK;
         private readonly TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 

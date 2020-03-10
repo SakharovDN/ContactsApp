@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     /// <summary>
     /// Класс номера телефона, хранящий информацию о номере телефона
     /// </summary>
     public class PhoneNumber
     {
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
         private long _number;
 
         /// <summary>
@@ -20,7 +23,7 @@ namespace ContactsAppUI
             {
                 if (value.ToString().Length != 11)
                     throw new ArgumentException("Номер должен состоять из 11 цифр");
-                else if (value / 10000000000 != 7)
+                else if (value.ToString()[0] != 7)
                     throw new ArgumentException("Номер должен начинаться с цифры 7");
                 else
                     _number = value;
