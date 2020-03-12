@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ContactsAppUI
+namespace ContactsApp
 {
     public partial class AboutForm : Form
     {
         public AboutForm()
         {
             InitializeComponent();
+        }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
