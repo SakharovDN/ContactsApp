@@ -13,13 +13,15 @@ namespace ContactsApp
     /// </summary>
     public class ProjectManager
     {
-        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
-
+        //private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
+        private static string path = @"d:\ContactsApp.notes";
         /// <summary>
         /// Метод загрузки информации о всех контактах из файла
         /// </summary>
         public Project LoadFromFile()
         {
+            if (!File.Exists(path))
+                return null;
             Project project = null;
             JsonSerializer serializer = new JsonSerializer();
             using (StreamReader sr = new StreamReader(path))

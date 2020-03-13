@@ -89,6 +89,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -203,6 +204,7 @@
             this.AddContactButton.Size = new System.Drawing.Size(20, 20);
             this.AddContactButton.TabIndex = 9;
             this.AddContactButton.UseVisualStyleBackColor = true;
+            this.AddContactButton.Click += new System.EventHandler(this.AddContactButton_Click);
             // 
             // ContactsListBox
             // 
@@ -215,6 +217,7 @@
             this.ContactsListBox.ScrollAlwaysVisible = true;
             this.ContactsListBox.Size = new System.Drawing.Size(257, 355);
             this.ContactsListBox.TabIndex = 8;
+            this.ContactsListBox.SelectedIndexChanged += new System.EventHandler(this.ContactsListBox_SelectedIndexChanged);
             // 
             // FindTextBox
             // 
