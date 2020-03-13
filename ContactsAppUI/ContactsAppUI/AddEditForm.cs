@@ -18,6 +18,8 @@ namespace ContactsApp
         {
             get
             {
+                if (DialogResult == DialogResult.Cancel)
+                    return null;
                 _contact.Surname = SurnameTextBox.Text;
                 _contact.Name = NameTextBox.Text;
                 _contact.Birthday = BirthdayDateTimePicker.Value;
@@ -45,6 +47,12 @@ namespace ContactsApp
         private void OKButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

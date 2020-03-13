@@ -45,14 +45,25 @@ namespace ContactsApp
             var addContant = new AddEditForm();
             addContant.ShowDialog();
             var newContact = addContant.Contact;
-            project.Contacts.Add(newContact);
-            projectmanager.SaveToFile(project);
-            ContactsListBox.Items.Add(newContact.Surname + " " + newContact.Name);
+            if (newContact != null)
+            {
+                project.Contacts.Add(newContact);
+                projectmanager.SaveToFile(project);
+                ContactsListBox.Items.Add(newContact.Surname + " " + newContact.Name);
+            }
         }
 
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Contact showContact = new Contact();
+        }
+
+        private void RemoveContactButton_Click(object sender, EventArgs e)
+        {
+            var selectedIndex = ContactsListBox.SelectedIndex;
+            project.Contacts.RemoveAt(selectedIndex);
+            projectmanager.SaveToFile(project);
+            ContactsListBox.Items.RemoveAt(selectedIndex);
         }
     }
 }

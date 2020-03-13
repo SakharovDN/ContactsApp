@@ -178,6 +178,7 @@
             this.RemoveContactButton.Size = new System.Drawing.Size(20, 20);
             this.RemoveContactButton.TabIndex = 11;
             this.RemoveContactButton.UseVisualStyleBackColor = true;
+            this.RemoveContactButton.Click += new System.EventHandler(this.RemoveContactButton_Click);
             // 
             // EditContactButton
             // 
