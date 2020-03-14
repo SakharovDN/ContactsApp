@@ -84,7 +84,7 @@ namespace ContactsApp
             set
             {
                 DateTime dateFrom = new DateTime(1900, 01, 01);
-                if (value > DateTime.Today && value < dateFrom)
+                if (value > DateTime.Today || value < dateFrom)
                     throw new ArgumentException("Дата рождения не корректна");
                 else
                     _birthday = value;

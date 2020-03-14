@@ -121,6 +121,7 @@
             this.PhoneTextBox.Name = "PhoneTextBox";
             this.PhoneTextBox.Size = new System.Drawing.Size(316, 20);
             this.PhoneTextBox.TabIndex = 18;
+            this.PhoneTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneTextBox_KeyPress);
             // 
             // BirthdayDateTimePicker
             // 

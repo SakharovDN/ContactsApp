@@ -55,15 +55,37 @@ namespace ContactsApp
 
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Contact showContact = new Contact();
+            var selectedIndex = ContactsListBox.SelectedIndex;
+            if (selectedIndex != -1)
+            {
+                SurnameTextBox.Text = project.Contacts[selectedIndex].Surname;
+                NameTextBox.Text = project.Contacts[selectedIndex].Name;
+                BirthdayDateTimePicker.Value = project.Contacts[selectedIndex].Birthday;
+                if (project.Contacts[selectedIndex].Number.Number != 0)
+                    PhoneTextBox.Text = project.Contacts[selectedIndex].Number.Number.ToString();
+                EmailTextBox.Text = project.Contacts[selectedIndex].Email;
+                IDVKTextBox.Text = project.Contacts[selectedIndex].IDVK;
+            }
+            else
+            {
+                SurnameTextBox.Clear();
+                NameTextBox.Clear();
+                BirthdayDateTimePicker.Value = DateTime.Parse("01.01.2000");
+                PhoneTextBox.Clear();
+                EmailTextBox.Clear();
+                IDVKTextBox.Clear();
+            }
         }
 
         private void RemoveContactButton_Click(object sender, EventArgs e)
         {
             var selectedIndex = ContactsListBox.SelectedIndex;
-            project.Contacts.RemoveAt(selectedIndex);
-            projectmanager.SaveToFile(project);
-            ContactsListBox.Items.RemoveAt(selectedIndex);
+            if (selectedIndex != -1)
+            {
+                project.Contacts.RemoveAt(selectedIndex);
+                projectmanager.SaveToFile(project);
+                ContactsListBox.Items.RemoveAt(selectedIndex);
+            }
         }
     }
 }

@@ -13,21 +13,14 @@ namespace ContactsApp
     public partial class AddEditForm : Form
     {
         private Contact _contact = new Contact();
-
         public Contact Contact
         {
             get
             {
                 if (DialogResult == DialogResult.Cancel)
                     return null;
-                _contact.Surname = SurnameTextBox.Text;
-                _contact.Name = NameTextBox.Text;
-                _contact.Birthday = BirthdayDateTimePicker.Value;
-                _contact.Number = new PhoneNumber();
-                _contact.Number.Number = long.Parse(PhoneTextBox.Text);
-                _contact.Email = EmailTextBox.Text;
-                _contact.IDVK = IDVKTextBox.Text;
-                return _contact;
+                else
+                    return _contact;
             }
             set
             {
@@ -41,19 +34,39 @@ namespace ContactsApp
 
         private void AddEditForm_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-            this.Close();
+            try
+            {
+                _contact.Surname = SurnameTextBox.Text;
+                _contact.Name = NameTextBox.Text;
+                _contact.Birthday = BirthdayDateTimePicker.Value;
+                _contact.Number = new PhoneNumber();
+                if (PhoneTextBox.Text != "")
+                    _contact.Number.Number = long.Parse(PhoneTextBox.Text);
+                _contact.Email = EmailTextBox.Text;
+                _contact.IDVK = IDVKTextBox.Text;
+                DialogResult = DialogResult.OK;
+            }
+            catch(ArgumentException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+        }
+
+        private void PhoneTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != (char)Keys.Back)
+                e.Handled = true;
         }
     }
 }
