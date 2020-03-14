@@ -12,7 +12,13 @@ namespace ContactsApp
 {
     public partial class AddEditForm : Form
     {
+        /// <summary>
+        /// Контакт
+        /// </summary>
         private Contact _contact = new Contact();
+        /// <summary>
+        /// Задает и возвращает контакт
+        /// </summary>
         public Contact Contact
         {
             get
