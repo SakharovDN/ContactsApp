@@ -104,20 +104,23 @@
             // addContactToolStripMenuItem
             // 
             this.addContactToolStripMenuItem.Name = "addContactToolStripMenuItem";
-            this.addContactToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.addContactToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addContactToolStripMenuItem.Text = "Add Contact";
+            this.addContactToolStripMenuItem.Click += new System.EventHandler(this.addContactToolStripMenuItem_Click);
             // 
             // editContactToolStripMenuItem
             // 
             this.editContactToolStripMenuItem.Name = "editContactToolStripMenuItem";
-            this.editContactToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.editContactToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editContactToolStripMenuItem.Text = "Edit Contact";
+            this.editContactToolStripMenuItem.Click += new System.EventHandler(this.editContactToolStripMenuItem_Click);
             // 
             // removeContactToolStripMenuItem
             // 
             this.removeContactToolStripMenuItem.Name = "removeContactToolStripMenuItem";
-            this.removeContactToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.removeContactToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removeContactToolStripMenuItem.Text = "Remove Contact";
+            this.removeContactToolStripMenuItem.Click += new System.EventHandler(this.removeContactToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -192,6 +195,7 @@
             this.EditContactButton.Size = new System.Drawing.Size(20, 20);
             this.EditContactButton.TabIndex = 10;
             this.EditContactButton.UseVisualStyleBackColor = true;
+            this.EditContactButton.Click += new System.EventHandler(this.EditContactButton_Click);
             // 
             // AddContactButton
             // 
@@ -271,6 +275,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.IDVKTextBox.Location = new System.Drawing.Point(87, 133);
             this.IDVKTextBox.Name = "IDVKTextBox";
+            this.IDVKTextBox.ReadOnly = true;
             this.IDVKTextBox.Size = new System.Drawing.Size(431, 20);
             this.IDVKTextBox.TabIndex = 20;
             // 
@@ -280,6 +285,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EmailTextBox.Location = new System.Drawing.Point(87, 107);
             this.EmailTextBox.Name = "EmailTextBox";
+            this.EmailTextBox.ReadOnly = true;
             this.EmailTextBox.Size = new System.Drawing.Size(431, 20);
             this.EmailTextBox.TabIndex = 19;
             // 
@@ -289,6 +295,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PhoneTextBox.Location = new System.Drawing.Point(87, 81);
             this.PhoneTextBox.Name = "PhoneTextBox";
+            this.PhoneTextBox.ReadOnly = true;
             this.PhoneTextBox.Size = new System.Drawing.Size(431, 20);
             this.PhoneTextBox.TabIndex = 18;
             // 
@@ -325,6 +332,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.NameTextBox.Location = new System.Drawing.Point(87, 29);
             this.NameTextBox.Name = "NameTextBox";
+            this.NameTextBox.ReadOnly = true;
             this.NameTextBox.Size = new System.Drawing.Size(431, 20);
             this.NameTextBox.TabIndex = 14;
             // 
@@ -335,6 +343,7 @@
             this.SurnameTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SurnameTextBox.Location = new System.Drawing.Point(87, 3);
             this.SurnameTextBox.Name = "SurnameTextBox";
+            this.SurnameTextBox.ReadOnly = true;
             this.SurnameTextBox.Size = new System.Drawing.Size(431, 20);
             this.SurnameTextBox.TabIndex = 13;
             // 
@@ -356,7 +365,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "ContactsaApp";
+            this.Text = "ContactsApp";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

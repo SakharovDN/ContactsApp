@@ -24,6 +24,13 @@ namespace ContactsApp
             }
             set
             {
+                SurnameTextBox.Text = value.Surname;
+                NameTextBox.Text = value.Name;
+                BirthdayDateTimePicker.Value = value.Birthday;
+                if (value.Number.Number != 0)
+                    PhoneTextBox.Text = value.Number.Number.ToString();
+                EmailTextBox.Text = value.Email;
+                IDVKTextBox.Text = value.IDVK;
                 _contact = value;
             }
         }
@@ -47,6 +54,8 @@ namespace ContactsApp
                 _contact.Number = new PhoneNumber();
                 if (PhoneTextBox.Text != "")
                     _contact.Number.Number = long.Parse(PhoneTextBox.Text);
+                else
+                    _contact.Number.Number = 0;
                 _contact.Email = EmailTextBox.Text;
                 _contact.IDVK = IDVKTextBox.Text;
                 DialogResult = DialogResult.OK;

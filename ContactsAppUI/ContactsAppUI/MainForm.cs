@@ -42,15 +42,7 @@ namespace ContactsApp
 
         private void AddContactButton_Click(object sender, EventArgs e)
         {
-            var addContant = new AddEditForm();
-            addContant.ShowDialog();
-            var newContact = addContant.Contact;
-            if (newContact != null)
-            {
-                project.Contacts.Add(newContact);
-                projectmanager.SaveToFile(project);
-                ContactsListBox.Items.Add(newContact.Surname + " " + newContact.Name);
-            }
+            addContact();
         }
 
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -63,6 +55,8 @@ namespace ContactsApp
                 BirthdayDateTimePicker.Value = project.Contacts[selectedIndex].Birthday;
                 if (project.Contacts[selectedIndex].Number.Number != 0)
                     PhoneTextBox.Text = project.Contacts[selectedIndex].Number.Number.ToString();
+                else
+                    PhoneTextBox.Text = "";
                 EmailTextBox.Text = project.Contacts[selectedIndex].Email;
                 IDVKTextBox.Text = project.Contacts[selectedIndex].IDVK;
             }
@@ -78,6 +72,62 @@ namespace ContactsApp
         }
 
         private void RemoveContactButton_Click(object sender, EventArgs e)
+        {
+            removeContact();
+        }
+
+        private void EditContactButton_Click(object sender, EventArgs e)
+        {
+            editContact();
+        }
+
+        private void addContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            addContact();
+        }
+
+        private void editContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editContact();
+        }
+
+        private void removeContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            removeContact();
+        }
+        private void addContact()
+        {
+            var addContantForm = new AddEditForm();
+            addContantForm.ShowDialog();
+            var newContact = addContantForm.Contact;
+            if (newContact != null)
+            {
+                project.Contacts.Add(newContact);
+                projectmanager.SaveToFile(project);
+                ContactsListBox.Items.Add(newContact.Surname + " " + newContact.Name);
+            }
+        }
+        private void editContact()
+        {
+            var editContantForm = new AddEditForm();
+            var selectedIndex = ContactsListBox.SelectedIndex;
+            if (selectedIndex != -1)
+            {
+                var selectedContact = project.Contacts[selectedIndex];
+                editContantForm.Contact = selectedContact;
+                editContantForm.ShowDialog();
+                var updatedContact = editContantForm.Contact;
+                if (updatedContact != null)
+                {
+                    project.Contacts.RemoveAt(selectedIndex);
+                    project.Contacts.Insert(selectedIndex, updatedContact);
+                    projectmanager.SaveToFile(project);
+                    ContactsListBox.Items.RemoveAt(selectedIndex);
+                    ContactsListBox.Items.Insert(selectedIndex, updatedContact.Surname + " " + updatedContact.Name);
+                }
+            }
+        }
+        private void removeContact()
         {
             var selectedIndex = ContactsListBox.SelectedIndex;
             if (selectedIndex != -1)
