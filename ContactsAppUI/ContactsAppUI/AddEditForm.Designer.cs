@@ -207,6 +207,7 @@
             this.ClientSize = new System.Drawing.Size(420, 205);
             this.Controls.Add(this.panel1);
             this.Name = "AddEditForm";
+            this.ShowIcon = false;
             this.Text = "Add/EditContact";
             this.Load += new System.EventHandler(this.AddEditForm_Load);
             this.panel1.ResumeLayout(false);

@@ -55,11 +55,16 @@ namespace ContactsApp
         private void removeContact()
         {
             var selectedIndex = ContactsListBox.SelectedIndex;
+            var selectedContact = project.Contacts[selectedIndex];
             if (selectedIndex != -1)
             {
-                project.Contacts.RemoveAt(selectedIndex);
-                projectmanager.SaveToFile(project);
-                ContactsListBox.Items.RemoveAt(selectedIndex);
+                DialogResult result = MessageBox.Show("Do you really want to remove this contact: " + selectedContact.Surname + " " + selectedContact.Name + "?","Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.OK)
+                {
+                    project.Contacts.RemoveAt(selectedIndex);
+                    projectmanager.SaveToFile(project);
+                    ContactsListBox.Items.RemoveAt(selectedIndex);
+                }
             }
         }
         /// <summary>
@@ -147,5 +152,15 @@ namespace ContactsApp
             this.Close();
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            projectmanager.SaveToFile(project);
+        }
     }
 }
