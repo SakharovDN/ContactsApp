@@ -45,13 +45,13 @@
             this.ContactsListBox = new System.Windows.Forms.ListBox();
             this.FindTextBox = new System.Windows.Forms.TextBox();
             this.FindLabel = new System.Windows.Forms.Label();
+            this.BirthdayTextBox = new System.Windows.Forms.TextBox();
             this.IDVKLabel = new System.Windows.Forms.Label();
             this.EmailLabel = new System.Windows.Forms.Label();
             this.PhoneLabel = new System.Windows.Forms.Label();
             this.IDVKTextBox = new System.Windows.Forms.TextBox();
             this.EmailTextBox = new System.Windows.Forms.TextBox();
             this.PhoneTextBox = new System.Windows.Forms.TextBox();
-            this.BirthdayDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.BirthdayLabel = new System.Windows.Forms.Label();
             this.NameLabel = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
@@ -104,21 +104,21 @@
             // addContactToolStripMenuItem
             // 
             this.addContactToolStripMenuItem.Name = "addContactToolStripMenuItem";
-            this.addContactToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addContactToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.addContactToolStripMenuItem.Text = "Add Contact";
             this.addContactToolStripMenuItem.Click += new System.EventHandler(this.addContactToolStripMenuItem_Click);
             // 
             // editContactToolStripMenuItem
             // 
             this.editContactToolStripMenuItem.Name = "editContactToolStripMenuItem";
-            this.editContactToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editContactToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.editContactToolStripMenuItem.Text = "Edit Contact";
             this.editContactToolStripMenuItem.Click += new System.EventHandler(this.editContactToolStripMenuItem_Click);
             // 
             // removeContactToolStripMenuItem
             // 
             this.removeContactToolStripMenuItem.Name = "removeContactToolStripMenuItem";
-            this.removeContactToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeContactToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.removeContactToolStripMenuItem.Text = "Remove Contact";
             this.removeContactToolStripMenuItem.Click += new System.EventHandler(this.removeContactToolStripMenuItem_Click);
             // 
@@ -133,7 +133,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -154,13 +154,13 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.BirthdayTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.IDVKLabel);
             this.splitContainer1.Panel2.Controls.Add(this.EmailLabel);
             this.splitContainer1.Panel2.Controls.Add(this.PhoneLabel);
             this.splitContainer1.Panel2.Controls.Add(this.IDVKTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.EmailTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.PhoneTextBox);
-            this.splitContainer1.Panel2.Controls.Add(this.BirthdayDateTimePicker);
             this.splitContainer1.Panel2.Controls.Add(this.BirthdayLabel);
             this.splitContainer1.Panel2.Controls.Add(this.NameLabel);
             this.splitContainer1.Panel2.Controls.Add(this.NameTextBox);
@@ -233,6 +233,7 @@
             this.FindTextBox.Name = "FindTextBox";
             this.FindTextBox.Size = new System.Drawing.Size(224, 20);
             this.FindTextBox.TabIndex = 7;
+            this.FindTextBox.TextChanged += new System.EventHandler(this.FindTextBox_TextChanged);
             // 
             // FindLabel
             // 
@@ -242,6 +243,16 @@
             this.FindLabel.Size = new System.Drawing.Size(30, 13);
             this.FindLabel.TabIndex = 6;
             this.FindLabel.Text = "Find:";
+            // 
+            // BirthdayTextBox
+            // 
+            this.BirthdayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.BirthdayTextBox.Location = new System.Drawing.Point(87, 55);
+            this.BirthdayTextBox.Name = "BirthdayTextBox";
+            this.BirthdayTextBox.ReadOnly = true;
+            this.BirthdayTextBox.Size = new System.Drawing.Size(431, 20);
+            this.BirthdayTextBox.TabIndex = 18;
             // 
             // IDVKLabel
             // 
@@ -278,7 +289,7 @@
             this.IDVKTextBox.Name = "IDVKTextBox";
             this.IDVKTextBox.ReadOnly = true;
             this.IDVKTextBox.Size = new System.Drawing.Size(431, 20);
-            this.IDVKTextBox.TabIndex = 20;
+            this.IDVKTextBox.TabIndex = 21;
             // 
             // EmailTextBox
             // 
@@ -288,7 +299,7 @@
             this.EmailTextBox.Name = "EmailTextBox";
             this.EmailTextBox.ReadOnly = true;
             this.EmailTextBox.Size = new System.Drawing.Size(431, 20);
-            this.EmailTextBox.TabIndex = 19;
+            this.EmailTextBox.TabIndex = 20;
             // 
             // PhoneTextBox
             // 
@@ -298,16 +309,7 @@
             this.PhoneTextBox.Name = "PhoneTextBox";
             this.PhoneTextBox.ReadOnly = true;
             this.PhoneTextBox.Size = new System.Drawing.Size(431, 20);
-            this.PhoneTextBox.TabIndex = 18;
-            // 
-            // BirthdayDateTimePicker
-            // 
-            this.BirthdayDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.BirthdayDateTimePicker.Location = new System.Drawing.Point(87, 55);
-            this.BirthdayDateTimePicker.Name = "BirthdayDateTimePicker";
-            this.BirthdayDateTimePicker.Size = new System.Drawing.Size(98, 20);
-            this.BirthdayDateTimePicker.TabIndex = 17;
-            this.BirthdayDateTimePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.PhoneTextBox.TabIndex = 19;
             // 
             // BirthdayLabel
             // 
@@ -406,12 +408,12 @@
         private System.Windows.Forms.TextBox IDVKTextBox;
         private System.Windows.Forms.TextBox EmailTextBox;
         private System.Windows.Forms.TextBox PhoneTextBox;
-        private System.Windows.Forms.DateTimePicker BirthdayDateTimePicker;
         private System.Windows.Forms.Label BirthdayLabel;
         private System.Windows.Forms.Label NameLabel;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.TextBox SurnameTextBox;
         private System.Windows.Forms.Label SurnameLabel;
+        private System.Windows.Forms.TextBox BirthdayTextBox;
     }
 }
 

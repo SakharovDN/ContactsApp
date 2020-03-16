@@ -87,6 +87,7 @@ namespace ContactsApp
                     projectmanager.SaveToFile(project);
                     ContactsListBox.Items.RemoveAt(selectedIndex);
                     ContactsListBox.Items.Insert(selectedIndex, updatedContact.Surname + " " + updatedContact.Name);
+                    ContactsListBox.SetSelected(selectedIndex, true);
                 }
             }
         }
@@ -128,7 +129,7 @@ namespace ContactsApp
             {
                 SurnameTextBox.Text = project.Contacts[selectedIndex].Surname;
                 NameTextBox.Text = project.Contacts[selectedIndex].Name;
-                BirthdayDateTimePicker.Value = project.Contacts[selectedIndex].Birthday;
+                BirthdayTextBox.Text = project.Contacts[selectedIndex].Birthday.ToShortDateString();
                 if (project.Contacts[selectedIndex].Number.Number != 0)
                     PhoneTextBox.Text = project.Contacts[selectedIndex].Number.Number.ToString();
                 else
@@ -140,7 +141,7 @@ namespace ContactsApp
             {
                 SurnameTextBox.Clear();
                 NameTextBox.Clear();
-                BirthdayDateTimePicker.Value = DateTime.Parse("01.01.2000");
+                BirthdayTextBox.Clear();
                 PhoneTextBox.Clear();
                 EmailTextBox.Clear();
                 IDVKTextBox.Clear();
