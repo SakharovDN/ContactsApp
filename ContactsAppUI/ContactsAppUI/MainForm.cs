@@ -204,7 +204,6 @@ namespace ContactsApp
         {
             ContactsListBox.Items.Clear();
             string findname = FindTextBox.Text;
-            TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
             findname = FirstUppercaseLetter.ToTitleCase(findname);
             foreach(Contact contact in project.Contacts)
             {
