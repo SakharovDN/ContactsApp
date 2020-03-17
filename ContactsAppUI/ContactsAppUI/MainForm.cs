@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace ContactsApp
 {
@@ -17,6 +18,12 @@ namespace ContactsApp
         public MainForm()
         {
             InitializeComponent();
+        }
+        /// <summary>
+        /// При загрузке MainForm в класс Project и ListBox загружаются существующие контакты
+        /// </summary>
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             project = projectmanager.LoadFromFile();
             if (project != null)
             {
@@ -28,11 +35,6 @@ namespace ContactsApp
                 project = new Project();
                 project.Contacts = new List<Contact>();
             }
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
         }
         /// <summary>
         /// Функция добавления нового контакта
@@ -121,21 +123,32 @@ namespace ContactsApp
         {
             editContact();
         }
-       
+
+       /// <summary>
+       /// Метод, который при выделении элемента ListBox выводит всю информацию о контакте в TextBox'ы
+       /// </summary>
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Изначально для нахождения нужного контакта использовался только selectedIndex, но тогда Поиск контакта работает некорректно
             var selectedIndex = ContactsListBox.SelectedIndex;
+            string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
             if (selectedIndex != -1)
             {
-                SurnameTextBox.Text = project.Contacts[selectedIndex].Surname;
-                NameTextBox.Text = project.Contacts[selectedIndex].Name;
-                BirthdayTextBox.Text = project.Contacts[selectedIndex].Birthday.ToShortDateString();
-                if (project.Contacts[selectedIndex].Number.Number != 0)
-                    PhoneTextBox.Text = project.Contacts[selectedIndex].Number.Number.ToString();
-                else
-                    PhoneTextBox.Text = "";
-                EmailTextBox.Text = project.Contacts[selectedIndex].Email;
-                IDVKTextBox.Text = project.Contacts[selectedIndex].IDVK;
+                foreach (Contact contact in project.Contacts)
+                {
+                    if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
+                    {
+                        SurnameTextBox.Text = contact.Surname;
+                        NameTextBox.Text = contact.Name;
+                        BirthdayTextBox.Text = contact.Birthday.ToShortDateString();
+                        if (contact.Number.Number != 0)
+                            PhoneTextBox.Text = contact.Number.Number.ToString();
+                        else
+                            PhoneTextBox.Text = "";
+                        EmailTextBox.Text = contact.Email;
+                        IDVKTextBox.Text = contact.IDVK;
+                    }
+                }
             }
             else
             {
@@ -162,6 +175,25 @@ namespace ContactsApp
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             projectmanager.SaveToFile(project);
+        }
+
+        /// <summary>
+        /// Метод, реализующий поиск контакта
+        /// </summary>
+        private void FindTextBox_TextChanged(object sender, EventArgs e)
+        {
+            ContactsListBox.Items.Clear();
+            string findname = FindTextBox.Text;
+            TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
+            findname = FirstUppercaseLetter.ToTitleCase(findname);
+            foreach(Contact contact in project.Contacts)
+            {
+                string fullname = contact.Surname + " " + contact.Name;
+                if (fullname.Contains(findname))
+                {
+                    ContactsListBox.Items.Add(fullname);
+                }
+            }
         }
     }
 }
