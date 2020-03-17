@@ -44,6 +44,10 @@ namespace ContactsApp
 
             set
             {
+                if(value.Length == 0)
+                {
+                    throw new ArgumentException("Введите фамилию");
+                }
                 if (value.Length > 50)
                 {
                     throw new ArgumentException("Фамилия не должна превышать 50 символов");
@@ -63,6 +67,10 @@ namespace ContactsApp
 
             set
             {
+                if (value.Length == 0)
+                {
+                    throw new ArgumentException("Введите имя");
+                }
                 if (value.Length > 50)
                 {
                     throw new ArgumentException("Фамилия не должна превышать 50 символов");

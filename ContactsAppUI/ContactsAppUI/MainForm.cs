@@ -15,6 +15,7 @@ namespace ContactsApp
     {
         ProjectManager projectmanager = new ProjectManager();
         Project project = new Project();
+        TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
         public MainForm()
         {
             InitializeComponent();
@@ -41,14 +42,17 @@ namespace ContactsApp
         /// </summary>
         private void addContact()
         {
+            string findname = FirstUppercaseLetter.ToTitleCase(FindTextBox.Text);
             var addContantForm = new AddEditForm();
             addContantForm.ShowDialog();
             var newContact = addContantForm.Contact;
             if (newContact != null)
             {
+                string fullname = newContact.Surname + " " + newContact.Name;
                 project.Contacts.Add(newContact);
                 projectmanager.SaveToFile(project);
-                ContactsListBox.Items.Add(newContact.Surname + " " + newContact.Name);
+                if (fullname.Contains(findname))
+                    ContactsListBox.Items.Add(fullname);
             }
         }
         /// <summary>
@@ -56,16 +60,23 @@ namespace ContactsApp
         /// </summary>
         private void removeContact()
         {
-            var selectedIndex = ContactsListBox.SelectedIndex;
-            var selectedContact = project.Contacts[selectedIndex];
-            if (selectedIndex != -1)
+            var selectedIndexListBox = ContactsListBox.SelectedIndex;
+            if (selectedIndexListBox != -1)
             {
-                DialogResult result = MessageBox.Show("Do you really want to remove this contact: " + selectedContact.Surname + " " + selectedContact.Name + "?","Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.OK)
+                string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
+                foreach (Contact contact in project.Contacts)
                 {
-                    project.Contacts.RemoveAt(selectedIndex);
-                    projectmanager.SaveToFile(project);
-                    ContactsListBox.Items.RemoveAt(selectedIndex);
+                    if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
+                    {
+                        DialogResult result = MessageBox.Show("Do you really want to remove this contact: " + contact.Surname + " " + contact.Name + "?", "Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        if (result == DialogResult.OK)
+                        {
+                            project.Contacts.Remove(contact);
+                            projectmanager.SaveToFile(project);
+                            ContactsListBox.Items.RemoveAt(selectedIndexListBox);
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -75,21 +86,29 @@ namespace ContactsApp
         private void editContact()
         {
             var editContantForm = new AddEditForm();
-            var selectedIndex = ContactsListBox.SelectedIndex;
-            if (selectedIndex != -1)
+            var selectedIndexListBox = ContactsListBox.SelectedIndex;
+            if (selectedIndexListBox != -1)
             {
-                var selectedContact = project.Contacts[selectedIndex];
-                editContantForm.Contact = selectedContact;
-                editContantForm.ShowDialog();
-                var updatedContact = editContantForm.Contact;
-                if (updatedContact != null)
+                string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
+                foreach (Contact contact in project.Contacts)
                 {
-                    project.Contacts.RemoveAt(selectedIndex);
-                    project.Contacts.Insert(selectedIndex, updatedContact);
-                    projectmanager.SaveToFile(project);
-                    ContactsListBox.Items.RemoveAt(selectedIndex);
-                    ContactsListBox.Items.Insert(selectedIndex, updatedContact.Surname + " " + updatedContact.Name);
-                    ContactsListBox.SetSelected(selectedIndex, true);
+                    if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
+                    {
+                        var selectedIndexProject = project.Contacts.IndexOf(contact);
+                        editContantForm.Contact = contact;
+                        editContantForm.ShowDialog();
+                        var updatedContact = editContantForm.Contact;
+                        if (updatedContact != null)
+                        {
+                            project.Contacts.Remove(contact);
+                            project.Contacts.Insert(selectedIndexProject, updatedContact);
+                            projectmanager.SaveToFile(project);
+                            ContactsListBox.Items.RemoveAt(selectedIndexListBox);
+                            ContactsListBox.Items.Insert(selectedIndexListBox, updatedContact.Surname + " " + updatedContact.Name);
+                            ContactsListBox.SetSelected(selectedIndexListBox, true);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -130,10 +149,10 @@ namespace ContactsApp
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Изначально для нахождения нужного контакта использовался только selectedIndex, но тогда Поиск контакта работает некорректно
-            var selectedIndex = ContactsListBox.SelectedIndex;
-            string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
-            if (selectedIndex != -1)
+            var selectedIndexListBox = ContactsListBox.SelectedIndex;
+            if (selectedIndexListBox != -1)
             {
+                string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
                 foreach (Contact contact in project.Contacts)
                 {
                     if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
@@ -147,6 +166,7 @@ namespace ContactsApp
                             PhoneTextBox.Text = "";
                         EmailTextBox.Text = contact.Email;
                         IDVKTextBox.Text = contact.IDVK;
+                        break;
                     }
                 }
             }
