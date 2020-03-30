@@ -13,6 +13,8 @@ namespace ContactsApp
 {
     public partial class MainForm : Form
     {
+        //private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
+        private static string path = @"d:\ContactsApp.notes";
         ProjectManager projectmanager = new ProjectManager();
         Project project = new Project();
         TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
@@ -25,7 +27,7 @@ namespace ContactsApp
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            project = projectmanager.LoadFromFile();
+            project = projectmanager.LoadFromFile(path);
             if (project != null)
             {
                 foreach (Contact contact in project.Contacts)
@@ -43,14 +45,14 @@ namespace ContactsApp
         private void addContact()
         {
             string findname = FirstUppercaseLetter.ToTitleCase(FindTextBox.Text);
-            var addContantForm = new AddEditForm();
+            var addContantForm = new ContactForm();
             addContantForm.ShowDialog();
             var newContact = addContantForm.Contact;
             if (newContact != null)
             {
                 string fullname = newContact.Surname + " " + newContact.Name;
                 project.Contacts.Add(newContact);
-                projectmanager.SaveToFile(project);
+                projectmanager.SaveToFile(project, path);
                 if (fullname.Contains(findname))
                     ContactsListBox.Items.Add(fullname);
             }
@@ -72,7 +74,7 @@ namespace ContactsApp
                         if (result == DialogResult.OK)
                         {
                             project.Contacts.Remove(contact);
-                            projectmanager.SaveToFile(project);
+                            projectmanager.SaveToFile(project, path);
                             ContactsListBox.Items.RemoveAt(selectedIndexListBox);
                         }
                         break;
@@ -85,7 +87,7 @@ namespace ContactsApp
         /// </summary>
         private void editContact()
         {
-            var editContantForm = new AddEditForm();
+            var editContantForm = new ContactForm();
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
             if (selectedIndexListBox != -1)
             {
@@ -102,7 +104,7 @@ namespace ContactsApp
                         {
                             project.Contacts.Remove(contact);
                             project.Contacts.Insert(selectedIndexProject, updatedContact);
-                            projectmanager.SaveToFile(project);
+                            projectmanager.SaveToFile(project, path);
                             ContactsListBox.Items.RemoveAt(selectedIndexListBox);
                             ContactsListBox.Items.Insert(selectedIndexListBox, updatedContact.Surname + " " + updatedContact.Name);
                             ContactsListBox.SetSelected(selectedIndexListBox, true);
@@ -194,7 +196,7 @@ namespace ContactsApp
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            projectmanager.SaveToFile(project);
+            projectmanager.SaveToFile(project, path);
         }
 
         /// <summary>

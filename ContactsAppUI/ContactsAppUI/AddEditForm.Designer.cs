@@ -1,6 +1,6 @@
 ﻿namespace ContactsApp
 {
-    partial class AddEditForm
+    partial class ContactForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.IDVKLabel = new System.Windows.Forms.Label();
             this.EmailLabel = new System.Windows.Forms.Label();
@@ -43,7 +44,9 @@
             this.SurnameLabel = new System.Windows.Forms.Label();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -103,6 +106,7 @@
             this.IDVKTextBox.Name = "IDVKTextBox";
             this.IDVKTextBox.Size = new System.Drawing.Size(316, 20);
             this.IDVKTextBox.TabIndex = 20;
+            this.IDVKTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.IDVKTextBox_Validating);
             // 
             // EmailTextBox
             // 
@@ -112,6 +116,7 @@
             this.EmailTextBox.Name = "EmailTextBox";
             this.EmailTextBox.Size = new System.Drawing.Size(316, 20);
             this.EmailTextBox.TabIndex = 19;
+            this.EmailTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.EmailTextBox_Validating);
             // 
             // PhoneTextBox
             // 
@@ -123,6 +128,7 @@
             this.PhoneTextBox.Size = new System.Drawing.Size(316, 20);
             this.PhoneTextBox.TabIndex = 18;
             this.PhoneTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneTextBox_KeyPress);
+            this.PhoneTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.PhoneTextBox_Validating);
             // 
             // BirthdayDateTimePicker
             // 
@@ -132,6 +138,7 @@
             this.BirthdayDateTimePicker.Size = new System.Drawing.Size(98, 20);
             this.BirthdayDateTimePicker.TabIndex = 17;
             this.BirthdayDateTimePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.BirthdayDateTimePicker.Validating += new System.ComponentModel.CancelEventHandler(this.BirthdayDateTimePicker_Validating);
             // 
             // BirthdayLabel
             // 
@@ -159,6 +166,7 @@
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(316, 20);
             this.NameTextBox.TabIndex = 14;
+            this.NameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.NameTextBox_Validating);
             // 
             // SurnameTextBox
             // 
@@ -169,6 +177,7 @@
             this.SurnameTextBox.Name = "SurnameTextBox";
             this.SurnameTextBox.Size = new System.Drawing.Size(316, 20);
             this.SurnameTextBox.TabIndex = 13;
+            this.SurnameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.SurnameTextBox_Validating);
             // 
             // SurnameLabel
             // 
@@ -201,18 +210,23 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // AddEditForm
+            // errorProvider1
+            // 
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // ContactForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(420, 205);
             this.Controls.Add(this.panel1);
-            this.Name = "AddEditForm";
+            this.Name = "ContactForm";
             this.ShowIcon = false;
             this.Text = "Add/EditContact";
-            this.Load += new System.EventHandler(this.AddEditForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,5 +248,6 @@
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.TextBox SurnameTextBox;
         private System.Windows.Forms.Label SurnameLabel;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

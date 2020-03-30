@@ -10,12 +10,14 @@ using System.Windows.Forms;
 
 namespace ContactsApp
 {
-    public partial class AddEditForm : Form
+    public partial class ContactForm : Form
     {
+        private Control[] controls;
         /// <summary>
         /// Контакт
         /// </summary>
         private Contact _contact = new Contact();
+
         /// <summary>
         /// Задает и возвращает контакт
         /// </summary>
@@ -40,36 +42,24 @@ namespace ContactsApp
                 _contact = value;
             }
         }
-        public AddEditForm()
+
+        public ContactForm()
         {
             InitializeComponent();
-        }
-
-        private void AddEditForm_Load(object sender, EventArgs e)
-        {
-            
+            controls = new Control[] { SurnameTextBox, NameTextBox, BirthdayDateTimePicker, PhoneTextBox, EmailTextBox, IDVKTextBox };
         }
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                _contact.Surname = SurnameTextBox.Text;
-                _contact.Name = NameTextBox.Text;
-                _contact.Birthday = BirthdayDateTimePicker.Value;
-                _contact.Number = new PhoneNumber();
-                if (PhoneTextBox.Text != "")
-                    _contact.Number.Number = long.Parse(PhoneTextBox.Text);
-                else
-                    _contact.Number.Number = 0;
-                _contact.Email = EmailTextBox.Text;
-                _contact.IDVK = IDVKTextBox.Text;
+            SurnameTextBox.Focus();
+            NameTextBox.Focus();
+            BirthdayDateTimePicker.Focus();
+            PhoneTextBox.Focus();
+            EmailTextBox.Focus();
+            IDVKTextBox.Focus();
+            OKButton.Focus();
+            if(IsValid())
                 DialogResult = DialogResult.OK;
-            }
-            catch(ArgumentException exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -83,5 +73,89 @@ namespace ContactsApp
             if (!Char.IsDigit(number) && number != (char)Keys.Back)
                 e.Handled = true;
         }
+
+        private void SurnameTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                _contact.Surname = SurnameTextBox.Text;
+                errorProvider1.SetError(SurnameTextBox, "");
+            }
+            catch (ArgumentException exception)
+            {
+                errorProvider1.SetError(SurnameTextBox, exception.Message);
+            }
+        }
+
+        private void NameTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                _contact.Name = NameTextBox.Text;
+                errorProvider1.SetError(NameTextBox, "");
+            }
+            catch (ArgumentException exception)
+            {
+                errorProvider1.SetError(NameTextBox, exception.Message);
+            }
+        }
+
+        private void BirthdayDateTimePicker_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                _contact.Birthday = BirthdayDateTimePicker.Value;
+                errorProvider1.SetError(BirthdayDateTimePicker, "");
+            }
+            catch (ArgumentException exception)
+            {
+                errorProvider1.SetError(BirthdayDateTimePicker, exception.Message);
+            }
+        }
+
+        private void PhoneTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                _contact.Number = new PhoneNumber();
+                if (PhoneTextBox.Text != "")
+                    _contact.Number.Number = long.Parse(PhoneTextBox.Text);
+                else
+                    _contact.Number.Number = 0;
+                errorProvider1.SetError(PhoneTextBox, "");
+            }
+            catch (ArgumentException exception)
+            {
+                errorProvider1.SetError(PhoneTextBox, exception.Message);
+            }
+        }
+
+        private void EmailTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            _contact.Email = EmailTextBox.Text;
+        }
+
+        private void IDVKTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                _contact.IDVK = IDVKTextBox.Text;
+                errorProvider1.SetError(IDVKTextBox, "");
+            }
+            catch (ArgumentException exception)
+            {
+                errorProvider1.SetError(IDVKTextBox, exception.Message);
+            }
+        }
+
+        private bool IsValid()
+        {
+            foreach (Control control in controls)
+                if (errorProvider1.GetError(control) != "")
+                    return false;
+            return true;
+        }
+
+
     }
 }

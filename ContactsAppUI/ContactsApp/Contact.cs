@@ -13,22 +13,17 @@ namespace ContactsApp
         /// Фамилия
         /// </summary>
         private string _surname;
+
         /// <summary>
         /// Имя
         /// </summary>
         private string _name;
-        /// <summary>
-        /// Номер телефона
-        /// </summary>
-        private PhoneNumber _number = new PhoneNumber();
+
         /// <summary>
         /// День рождения
         /// </summary>
         private DateTime _birthday = new DateTime();
-        /// <summary>
-        /// E-mail
-        /// </summary>
-        private string _email;
+
         /// <summary>
         /// idVK
         /// </summary>
@@ -86,6 +81,9 @@ namespace ContactsApp
         /// </summary>
         public PhoneNumber Number { get; set; }
 
+        /// <summary>
+        /// Возвращает и задает день рождения
+        /// </summary>
         public DateTime Birthday
         {
             get { return _birthday; }
