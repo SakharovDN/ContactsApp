@@ -224,7 +224,6 @@
             this.Name = "ContactForm";
             this.ShowIcon = false;
             this.Text = "Add/EditContact";
-            this.Load += new System.EventHandler(this.ContactForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

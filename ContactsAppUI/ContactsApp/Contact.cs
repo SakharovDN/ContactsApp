@@ -5,7 +5,7 @@ namespace ContactsApp
 {
     /// <summary>
     /// Класс контакта, хранящий информацию о фамилии, имени,
-    /// номере телефона, дне рождения, E-mal'a и idVK
+    /// номере телефона, дне рождения, E-mail'a и idVK
     /// </summary>
     public class Contact : ICloneable
     {
@@ -28,7 +28,8 @@ namespace ContactsApp
         /// idVK
         /// </summary>
         private string _iDVK;
-        private readonly TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
+
+        private readonly TextInfo _firstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 
         /// <summary>
         /// Возвращает и задает фамилию
@@ -48,8 +49,7 @@ namespace ContactsApp
                     throw new ArgumentException("Фамилия не должна превышать 50 символов");
                 }
                 else
-                    _surname = value;
-                _surname = FirstUppercaseLetter.ToTitleCase(_surname);
+                _surname = _firstUppercaseLetter.ToTitleCase(value);
             }
         }
 
@@ -71,8 +71,7 @@ namespace ContactsApp
                     throw new ArgumentException("Фамилия не должна превышать 50 символов");
                 }
                 else
-                    _name = value;
-                _name = FirstUppercaseLetter.ToTitleCase(_name);
+                _name = _firstUppercaseLetter.ToTitleCase(value);
             }
         }
 
@@ -87,14 +86,14 @@ namespace ContactsApp
         public DateTime Birthday
         {
             get { return _birthday; }
+
             set
             {
-                DateTime dateFrom = new DateTime(1900, 01, 01);
-                if (value > DateTime.Today || value < dateFrom)
+                DateTime minDate = new DateTime(1900, 01, 01);
+                if (value > DateTime.Today || value < minDate)
                     throw new ArgumentException("Дата рождения не корректна");
                 else
                     _birthday = value;
-
             }
         }
 

@@ -6,7 +6,11 @@ namespace ContactsApp
 {
     public partial class ContactForm : Form
     {
+        /// <summary>
+        /// Массив, в котором содержатся объекты (все TextBox'ы и DateTimePicker)
+        /// </summary>
         private Control[] controls;
+
         /// <summary>
         /// Контакт
         /// </summary>
@@ -148,11 +152,6 @@ namespace ContactsApp
                 if (errorProvider1.GetError(control) != "")
                     return false;
             return true;
-        }
-
-        private void ContactForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

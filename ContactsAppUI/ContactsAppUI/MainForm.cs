@@ -7,16 +7,21 @@ namespace ContactsApp
 {
     public partial class MainForm : Form
     {
-        //private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
-        private static string path = @"d:\ContactsApp.notes";
+        /// <summary>
+        /// В переменной path хранится путь до файла, где хранится список существующих контактов
+        /// </summary>
+        private readonly string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ContactsApp.notes";
 
-        ProjectManager projectmanager = new ProjectManager();
+        private ProjectManager _projectManager = new ProjectManager();
 
-        Project project = new Project();
+        private Project _project = new Project();
 
-        TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
+        private readonly TextInfo _firstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 
-        Dictionary<int, int> indecis = new Dictionary<int, int>();
+        /// <summary>
+        /// В словаре indecis хранятся индексы, необходимые для реализации создания, редактирования и удаления контакта во время использования поиска
+        /// </summary>
+        private Dictionary<int, int> indecis = new Dictionary<int, int>();
 
         public MainForm()
         {
@@ -28,59 +33,60 @@ namespace ContactsApp
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            project = projectmanager.LoadFromFile(path);
-            if (project != null)
+            _project = _projectManager.LoadFromFile(path);
+            if (_project != null)
             {
-                foreach (Contact contact in project.Contacts)
+                foreach (Contact contact in _project.Contacts)
                 {
-                    indecis.Add(project.Contacts.IndexOf(contact), project.Contacts.IndexOf(contact));
+                    indecis.Add(_project.Contacts.IndexOf(contact), _project.Contacts.IndexOf(contact));
                     ContactsListBox.Items.Add($"{contact.Surname} {contact.Name}");
                 }
             }
             else
             {
                 indecis = new Dictionary<int, int>();
-                project = new Project();
-                project.Contacts = new List<Contact>();
+                _project = new Project();
+                _project.Contacts = new List<Contact>();
             }
         }
 
         /// <summary>
         /// Функция добавления нового контакта
         /// </summary>
-        private void addContact()
+        private void AddContact()
         {
             var addContaсtForm = new ContactForm();
             addContaсtForm.ShowDialog();
             var newContact = addContaсtForm.Contact;
             if (newContact != null)
             {
-                project.Contacts.Add(newContact);
+                _project.Contacts.Add(newContact);
                 Rewriting();
-                projectmanager.SaveToFile(project, path);
+                _projectManager.SaveToFile(_project, path);
             }
         }
 
         /// <summary>
         /// Функция удаления контакта
         /// </summary>
-        private void removeContact()
+        private void RemoveContact()
         {
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
             if (selectedIndexListBox != -1)
             {
-                foreach(var pair in indecis)
+                foreach (var pair in indecis)
                 {
-                    if(selectedIndexListBox == pair.Value)
+                    if (selectedIndexListBox == pair.Value)
                     {
-                        var selectedContact = project.Contacts[pair.Key];
+                        var selectedContact = _project.Contacts[pair.Key];
                         DialogResult result = MessageBox.Show($"Do you really want to remove this contact: {selectedContact.Surname} {selectedContact.Name}?",
                             "Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                         if (result == DialogResult.OK)
                         {
-                            project.Contacts.RemoveAt(pair.Key);
+                            _project.Contacts.RemoveAt(pair.Key);
+                            ContactsListBox.SetSelected(selectedIndexListBox, false);
                             Rewriting();
-                            projectmanager.SaveToFile(project, path);
+                            _projectManager.SaveToFile(_project, path);
                         }
                         break;
                     }
@@ -91,26 +97,27 @@ namespace ContactsApp
         /// <summary>
         /// Функция редактирования контакта
         /// </summary>
-        private void editContact()
+        private void EditContact()
         {
             var editContactForm = new ContactForm();
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
             if (selectedIndexListBox != -1)
             {
-                foreach(var pair in indecis)
+                foreach (var pair in indecis)
                 {
-                    if(selectedIndexListBox == pair.Value)
+                    if (selectedIndexListBox == pair.Value)
                     {
-                        var selectedContact = project.Contacts[pair.Key];
+                        var selectedContact = _project.Contacts[pair.Key];
                         editContactForm.Contact = selectedContact;
                         editContactForm.ShowDialog();
                         var updatedContact = editContactForm.Contact;
-                        if(updatedContact != null)
+                        if (updatedContact != null)
                         {
-                            project.Contacts.RemoveAt(pair.Key);
-                            project.Contacts.Insert(pair.Key, updatedContact);
+                            _project.Contacts.RemoveAt(pair.Key);
+                            _project.Contacts.Insert(pair.Key, updatedContact);
                             Rewriting();
-                            projectmanager.SaveToFile(project, path);
+                            ContactsListBox.SetSelected(selectedIndexListBox, true);
+                            _projectManager.SaveToFile(_project, path);
                         }
                         break;
                     }
@@ -120,32 +127,32 @@ namespace ContactsApp
        
         private void AddContactButton_Click(object sender, EventArgs e)
         {
-            addContact();
+            AddContact();
         }
 
         private void RemoveContactButton_Click(object sender, EventArgs e)
         {
-            removeContact();
+            RemoveContact();
         }
 
         private void EditContactButton_Click(object sender, EventArgs e)
         {
-            editContact();
+            EditContact();
         }
 
         private void addContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            addContact();
+            AddContact();
         }
 
         private void removeContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            removeContact();
+            RemoveContact();
         }
 
         private void editContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editContact();
+            EditContact();
         }
 
         /// <summary>
@@ -160,7 +167,7 @@ namespace ContactsApp
                 {
                     if(selectedIndexListBox == pair.Value)
                     {
-                        var selectedContact = project.Contacts[pair.Key];
+                        var selectedContact = _project.Contacts[pair.Key];
                         SurnameTextBox.Text = selectedContact.Surname;
                         NameTextBox.Text = selectedContact.Name;
                         BirthdayTextBox.Text = selectedContact.Birthday.ToShortDateString();
@@ -198,7 +205,7 @@ namespace ContactsApp
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            projectmanager.SaveToFile(project, path);
+            _projectManager.SaveToFile(_project, path);
         }
 
         /// <summary>
@@ -213,14 +220,14 @@ namespace ContactsApp
         {
             ContactsListBox.Items.Clear();
             indecis.Clear();
-            string findname = FirstUppercaseLetter.ToTitleCase(FindTextBox.Text);
-            foreach (Contact contact in project.Contacts)
+            string findname = _firstUppercaseLetter.ToTitleCase(FindTextBox.Text);
+            foreach (Contact contact in _project.Contacts)
             {
                 string fullname = $"{contact.Surname} {contact.Name}";
                 if (fullname.Contains(findname))
                 {
                     ContactsListBox.Items.Add(fullname);
-                    indecis.Add(project.Contacts.IndexOf(contact), ContactsListBox.Items.Count - 1);
+                    indecis.Add(_project.Contacts.IndexOf(contact), ContactsListBox.Items.Count - 1);
                 }
             }
         }
