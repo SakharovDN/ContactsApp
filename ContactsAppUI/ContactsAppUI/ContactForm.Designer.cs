@@ -104,7 +104,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.IDVKTextBox.Location = new System.Drawing.Point(92, 142);
             this.IDVKTextBox.Name = "IDVKTextBox";
-            this.IDVKTextBox.Size = new System.Drawing.Size(316, 20);
+            this.IDVKTextBox.Size = new System.Drawing.Size(305, 20);
             this.IDVKTextBox.TabIndex = 20;
             this.IDVKTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.IDVKTextBox_Validating);
             // 
@@ -114,7 +114,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EmailTextBox.Location = new System.Drawing.Point(92, 116);
             this.EmailTextBox.Name = "EmailTextBox";
-            this.EmailTextBox.Size = new System.Drawing.Size(316, 20);
+            this.EmailTextBox.Size = new System.Drawing.Size(305, 20);
             this.EmailTextBox.TabIndex = 19;
             this.EmailTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.EmailTextBox_Validating);
             // 
@@ -125,7 +125,7 @@
             this.PhoneTextBox.Location = new System.Drawing.Point(92, 90);
             this.PhoneTextBox.MaxLength = 11;
             this.PhoneTextBox.Name = "PhoneTextBox";
-            this.PhoneTextBox.Size = new System.Drawing.Size(316, 20);
+            this.PhoneTextBox.Size = new System.Drawing.Size(305, 20);
             this.PhoneTextBox.TabIndex = 18;
             this.PhoneTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneTextBox_KeyPress);
             this.PhoneTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.PhoneTextBox_Validating);
@@ -164,7 +164,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.NameTextBox.Location = new System.Drawing.Point(92, 38);
             this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(316, 20);
+            this.NameTextBox.Size = new System.Drawing.Size(305, 20);
             this.NameTextBox.TabIndex = 14;
             this.NameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.NameTextBox_Validating);
             // 
@@ -175,7 +175,7 @@
             this.SurnameTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SurnameTextBox.Location = new System.Drawing.Point(92, 12);
             this.SurnameTextBox.Name = "SurnameTextBox";
-            this.SurnameTextBox.Size = new System.Drawing.Size(316, 20);
+            this.SurnameTextBox.Size = new System.Drawing.Size(305, 20);
             this.SurnameTextBox.TabIndex = 13;
             this.SurnameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.SurnameTextBox_Validating);
             // 
@@ -191,7 +191,7 @@
             // OKButton
             // 
             this.OKButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OKButton.Location = new System.Drawing.Point(252, 170);
+            this.OKButton.Location = new System.Drawing.Point(241, 170);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 1;
@@ -202,7 +202,7 @@
             // CancelButton
             // 
             this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CancelButton.Location = new System.Drawing.Point(333, 170);
+            this.CancelButton.Location = new System.Drawing.Point(322, 170);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 0;
@@ -224,6 +224,7 @@
             this.Name = "ContactForm";
             this.ShowIcon = false;
             this.Text = "Add/EditContact";
+            this.Load += new System.EventHandler(this.ContactForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

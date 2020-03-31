@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 
@@ -15,15 +9,22 @@ namespace ContactsApp
     {
         //private static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Roaming\ContactsApp.notes";
         private static string path = @"d:\ContactsApp.notes";
+
         ProjectManager projectmanager = new ProjectManager();
+
         Project project = new Project();
+
         TextInfo FirstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
+
+        Dictionary<int, int> indecis = new Dictionary<int, int>();
+
         public MainForm()
         {
             InitializeComponent();
         }
+
         /// <summary>
-        /// При загрузке MainForm в класс Project и ListBox загружаются существующие контакты
+        /// При загрузке MainForm в класс Project, словарь indecis и ListBox загружаются существующие контакты
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -31,32 +32,35 @@ namespace ContactsApp
             if (project != null)
             {
                 foreach (Contact contact in project.Contacts)
-                    ContactsListBox.Items.Add(contact.Surname + " " + contact.Name);
+                {
+                    indecis.Add(project.Contacts.IndexOf(contact), project.Contacts.IndexOf(contact));
+                    ContactsListBox.Items.Add($"{contact.Surname} {contact.Name}");
+                }
             }
             else
             {
+                indecis = new Dictionary<int, int>();
                 project = new Project();
                 project.Contacts = new List<Contact>();
             }
         }
+
         /// <summary>
         /// Функция добавления нового контакта
         /// </summary>
         private void addContact()
         {
-            string findname = FirstUppercaseLetter.ToTitleCase(FindTextBox.Text);
-            var addContantForm = new ContactForm();
-            addContantForm.ShowDialog();
-            var newContact = addContantForm.Contact;
+            var addContaсtForm = new ContactForm();
+            addContaсtForm.ShowDialog();
+            var newContact = addContaсtForm.Contact;
             if (newContact != null)
             {
-                string fullname = newContact.Surname + " " + newContact.Name;
                 project.Contacts.Add(newContact);
+                Rewriting();
                 projectmanager.SaveToFile(project, path);
-                if (fullname.Contains(findname))
-                    ContactsListBox.Items.Add(fullname);
             }
         }
+
         /// <summary>
         /// Функция удаления контакта
         /// </summary>
@@ -65,51 +69,50 @@ namespace ContactsApp
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
             if (selectedIndexListBox != -1)
             {
-                string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
-                foreach (Contact contact in project.Contacts)
+                foreach(var pair in indecis)
                 {
-                    if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
+                    if(selectedIndexListBox == pair.Value)
                     {
-                        DialogResult result = MessageBox.Show("Do you really want to remove this contact: " + contact.Surname + " " + contact.Name + "?", "Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        var selectedContact = project.Contacts[pair.Key];
+                        DialogResult result = MessageBox.Show($"Do you really want to remove this contact: {selectedContact.Surname} {selectedContact.Name}?",
+                            "Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                         if (result == DialogResult.OK)
                         {
-                            project.Contacts.Remove(contact);
+                            project.Contacts.RemoveAt(pair.Key);
+                            Rewriting();
                             projectmanager.SaveToFile(project, path);
-                            ContactsListBox.Items.RemoveAt(selectedIndexListBox);
                         }
                         break;
                     }
                 }
             }
         }
+
         /// <summary>
         /// Функция редактирования контакта
         /// </summary>
         private void editContact()
         {
-            var editContantForm = new ContactForm();
+            var editContactForm = new ContactForm();
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
             if (selectedIndexListBox != -1)
             {
-                string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
-                foreach (Contact contact in project.Contacts)
+                foreach(var pair in indecis)
                 {
-                    if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
+                    if(selectedIndexListBox == pair.Value)
                     {
-                        var selectedIndexProject = project.Contacts.IndexOf(contact);
-                        editContantForm.Contact = contact;
-                        editContantForm.ShowDialog();
-                        var updatedContact = editContantForm.Contact;
-                        if (updatedContact != null)
+                        var selectedContact = project.Contacts[pair.Key];
+                        editContactForm.Contact = selectedContact;
+                        editContactForm.ShowDialog();
+                        var updatedContact = editContactForm.Contact;
+                        if(updatedContact != null)
                         {
-                            project.Contacts.Remove(contact);
-                            project.Contacts.Insert(selectedIndexProject, updatedContact);
+                            project.Contacts.RemoveAt(pair.Key);
+                            project.Contacts.Insert(pair.Key, updatedContact);
+                            Rewriting();
                             projectmanager.SaveToFile(project, path);
-                            ContactsListBox.Items.RemoveAt(selectedIndexListBox);
-                            ContactsListBox.Items.Insert(selectedIndexListBox, updatedContact.Surname + " " + updatedContact.Name);
-                            ContactsListBox.SetSelected(selectedIndexListBox, true);
-                            break;
                         }
+                        break;
                     }
                 }
             }
@@ -145,29 +148,28 @@ namespace ContactsApp
             editContact();
         }
 
-       /// <summary>
-       /// Метод, который при выделении элемента ListBox выводит всю информацию о контакте в TextBox'ы
-       /// </summary>
+        /// <summary>
+        /// Метод, который при выделении элемента ListBox выводит всю информацию о контакте в TextBox'ы
+        /// </summary>
         private void ContactsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Изначально для нахождения нужного контакта использовался только selectedIndex, но тогда Поиск контакта работает некорректно
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
             if (selectedIndexListBox != -1)
             {
-                string[] fullname = ContactsListBox.SelectedItem.ToString().Split();
-                foreach (Contact contact in project.Contacts)
+                foreach (var pair in indecis)
                 {
-                    if (fullname[0] == contact.Surname && fullname[1] == contact.Name)
+                    if(selectedIndexListBox == pair.Value)
                     {
-                        SurnameTextBox.Text = contact.Surname;
-                        NameTextBox.Text = contact.Name;
-                        BirthdayTextBox.Text = contact.Birthday.ToShortDateString();
-                        if (contact.Number.Number != 0)
-                            PhoneTextBox.Text = contact.Number.Number.ToString();
+                        var selectedContact = project.Contacts[pair.Key];
+                        SurnameTextBox.Text = selectedContact.Surname;
+                        NameTextBox.Text = selectedContact.Name;
+                        BirthdayTextBox.Text = selectedContact.Birthday.ToShortDateString();
+                        if (selectedContact.Number.Number != 0)
+                            PhoneTextBox.Text = selectedContact.Number.Number.ToString();
                         else
                             PhoneTextBox.Text = "";
-                        EmailTextBox.Text = contact.Email;
-                        IDVKTextBox.Text = contact.IDVK;
+                        EmailTextBox.Text = selectedContact.Email;
+                        IDVKTextBox.Text = selectedContact.IDVK;
                         break;
                     }
                 }
@@ -204,15 +206,21 @@ namespace ContactsApp
         /// </summary>
         private void FindTextBox_TextChanged(object sender, EventArgs e)
         {
+            Rewriting();
+        }
+
+        private void Rewriting()
+        {
             ContactsListBox.Items.Clear();
-            string findname = FindTextBox.Text;
-            findname = FirstUppercaseLetter.ToTitleCase(findname);
-            foreach(Contact contact in project.Contacts)
+            indecis.Clear();
+            string findname = FirstUppercaseLetter.ToTitleCase(FindTextBox.Text);
+            foreach (Contact contact in project.Contacts)
             {
-                string fullname = contact.Surname + " " + contact.Name;
+                string fullname = $"{contact.Surname} {contact.Name}";
                 if (fullname.Contains(findname))
                 {
                     ContactsListBox.Items.Add(fullname);
+                    indecis.Add(project.Contacts.IndexOf(contact), ContactsListBox.Items.Count - 1);
                 }
             }
         }
