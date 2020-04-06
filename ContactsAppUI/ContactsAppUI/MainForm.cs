@@ -171,10 +171,7 @@ namespace ContactsApp
                         SurnameTextBox.Text = selectedContact.Surname;
                         NameTextBox.Text = selectedContact.Name;
                         BirthdayTextBox.Text = selectedContact.Birthday.ToShortDateString();
-                        if (selectedContact.Number.Number != 0)
-                            PhoneTextBox.Text = selectedContact.Number.Number.ToString();
-                        else
-                            PhoneTextBox.Text = "";
+                        PhoneTextBox.Text = selectedContact.Number.Number.ToString();
                         EmailTextBox.Text = selectedContact.Email;
                         IDVKTextBox.Text = selectedContact.IDVK;
                         break;

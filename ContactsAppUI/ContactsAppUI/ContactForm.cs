@@ -33,8 +33,7 @@ namespace ContactsApp
                 SurnameTextBox.Text = value.Surname;
                 NameTextBox.Text = value.Name;
                 BirthdayDateTimePicker.Value = value.Birthday;
-                if (value.Number.Number != 0)
-                    PhoneTextBox.Text = value.Number.Number.ToString();
+                PhoneTextBox.Text = value.Number.Number.ToString();
                 EmailTextBox.Text = value.Email;
                 IDVKTextBox.Text = value.IDVK;
                 _contact = value;
@@ -116,15 +115,16 @@ namespace ContactsApp
             try
             {
                 _contact.Number = new PhoneNumber();
-                if (PhoneTextBox.Text != "")
-                    _contact.Number.Number = long.Parse(PhoneTextBox.Text);
-                else
-                    _contact.Number.Number = 0;
+                _contact.Number.Number = long.Parse(PhoneTextBox.Text);
                 errorProvider1.SetError(PhoneTextBox, "");
             }
             catch (ArgumentException exception)
             {
                 errorProvider1.SetError(PhoneTextBox, exception.Message);
+            }
+            catch (FormatException)
+            {
+                errorProvider1.SetError(PhoneTextBox, "Введите номер телефона");
             }
         }
 
