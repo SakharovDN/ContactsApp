@@ -5,7 +5,7 @@ namespace ContactsApp
     /// <summary>
     /// Класс номера телефона, хранящий информацию о номере телефона
     /// </summary>
-    public class PhoneNumber
+    public class PhoneNumber : IEquatable<PhoneNumber>
     {
         /// <summary>
         /// Номер телефона
@@ -28,6 +28,11 @@ namespace ContactsApp
                 else
                     _number = value;
             }
+        }
+
+        public bool Equals(PhoneNumber other)
+        {
+            return other.Number == this.Number;
         }
     }
 }

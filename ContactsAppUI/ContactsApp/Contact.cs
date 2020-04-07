@@ -7,7 +7,7 @@ namespace ContactsApp
     /// Класс контакта, хранящий информацию о фамилии, имени,
     /// номере телефона, дне рождения, E-mail'a и idVK
     /// </summary>
-    public class Contact : ICloneable
+    public class Contact : ICloneable, IEquatable<Contact>
     {
         /// <summary>
         /// Фамилия
@@ -133,6 +133,15 @@ namespace ContactsApp
             contact.Email = this.Email;
             contact.IDVK = this.IDVK;
             return contact;
+        }
+
+        public bool Equals(Contact other)
+        {
+            if (other.Surname == this.Surname && other.Name == this.Name
+                && other.Birthday == this.Birthday && other.Number.Equals(this.Number)
+                && other.Email == this.Email && other.IDVK == this.IDVK)
+                return true;
+            return false;
         }
     }
 }
