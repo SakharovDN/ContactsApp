@@ -80,7 +80,7 @@ namespace ContactsApp.UnitTests
         public void TestNumberGet_CorrectValue()
         {
             _contact.Number = new PhoneNumber();
-            _contact.Number.Number = 79996195751;
+            _contact.Number.Number = 79995552233;
             var expected = _contact.Number;
             _contact.Number = expected;
             var actual = _contact.Number;

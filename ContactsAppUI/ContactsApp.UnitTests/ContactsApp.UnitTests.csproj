@@ -50,10 +50,15 @@
   <ItemGroup>
     <Compile Include="ContactTest.cs" />
     <Compile Include="PhoneNumberTest.cs" />
+    <Compile Include="ProjectManagerTest.cs" />
+    <Compile Include="ProjectTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="referenceFile.notes">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ContactsApp\ContactsApp.csproj">

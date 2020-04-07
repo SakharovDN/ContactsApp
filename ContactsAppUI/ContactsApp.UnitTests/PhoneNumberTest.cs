@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace ContactsApp.UnitTests
@@ -16,7 +12,7 @@ namespace ContactsApp.UnitTests
         private PhoneNumber _number;
 
         [SetUp]
-        public void InitContact()
+        public void InitPhoneNumber()
         {
             _number = new PhoneNumber();
         }
@@ -27,7 +23,7 @@ namespace ContactsApp.UnitTests
         [Test(Description = "Позитивный тест геттера Number")]
         public void TestNumberGet_CorrectValue()
         {
-            var expected = 79996195751;
+            var expected = 79998885522;
             _number.Number = expected;
             var actual = _number.Number;
 
@@ -39,7 +35,7 @@ namespace ContactsApp.UnitTests
         /// </summary>
         [TestCase(7999, "Должно возникать исключение, если номер состоит не из 11 цифр",
             TestName = "Присвоение цифры не из 11 цифр в качестве номера")]
-        [TestCase(89996195751, "Должно возникать исключение, если номер начинается не с цифры 7",
+        [TestCase(89995558822, "Должно возникать исключение, если номер начинается не с цифры 7",
             TestName = "Присвоение неправильного номера, который не начинается с цифры 7")]
         public void TestSurnameSet_ArgumentException(long wrongNumber, string message)
         {
