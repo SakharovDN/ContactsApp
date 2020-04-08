@@ -37,6 +37,7 @@ namespace ContactsApp
             if (_project != null)
             {
                 Rewriting();
+                BirthdayContacts();
             }
             else
             {
@@ -44,7 +45,6 @@ namespace ContactsApp
                 _project = new Project();
                 _project.Contacts = new List<Contact>();
             }
-            BirthdayContacts();
         }
 
         /// <summary>
@@ -225,7 +225,6 @@ namespace ContactsApp
             string findname = _firstUppercaseLetter.ToTitleCase(FindTextBox.Text);
             foreach (Contact contact in _project.Contacts)
             {
-                int index = _project.Contacts.IndexOf(contact);
                 string fullname = $"{contact.Surname} {contact.Name}";
                 if (fullname.Contains(findname))
                 {
@@ -258,10 +257,9 @@ namespace ContactsApp
             }
         }
 
-        private void ContactsListBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void ContactsListBox_KeyDown(object sender, KeyEventArgs e)
         {
-            char button = e.KeyChar;
-            if (button == (char)Keys.Delete)
+            if (e.KeyCode == Keys.Delete)
             {
                 RemoveContact();
             }

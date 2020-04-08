@@ -46,6 +46,8 @@
             this.FindTextBox = new System.Windows.Forms.TextBox();
             this.FindLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BirthdayInfoContactsLabel = new System.Windows.Forms.Label();
+            this.BirthdayInfoLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BirthdayTextBox = new System.Windows.Forms.TextBox();
             this.IDVKLabel = new System.Windows.Forms.Label();
@@ -59,8 +61,6 @@
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.SurnameTextBox = new System.Windows.Forms.TextBox();
             this.SurnameLabel = new System.Windows.Forms.Label();
-            this.BirthdayInfoLabel = new System.Windows.Forms.Label();
-            this.BirthdayInfoContactsLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -231,7 +231,7 @@
             this.ContactsListBox.Size = new System.Drawing.Size(257, 355);
             this.ContactsListBox.TabIndex = 8;
             this.ContactsListBox.SelectedIndexChanged += new System.EventHandler(this.ContactsListBox_SelectedIndexChanged);
-            this.ContactsListBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ContactsListBox_KeyPress);
+            this.ContactsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ContactsListBox_KeyDown);
             // 
             // FindTextBox
             // 
@@ -264,6 +264,25 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(527, 92);
             this.panel1.TabIndex = 24;
+            this.panel1.Visible = false;
+            // 
+            // BirthdayInfoContactsLabel
+            // 
+            this.BirthdayInfoContactsLabel.AutoSize = true;
+            this.BirthdayInfoContactsLabel.Location = new System.Drawing.Point(95, 41);
+            this.BirthdayInfoContactsLabel.Name = "BirthdayInfoContactsLabel";
+            this.BirthdayInfoContactsLabel.Size = new System.Drawing.Size(35, 13);
+            this.BirthdayInfoContactsLabel.TabIndex = 2;
+            this.BirthdayInfoContactsLabel.Text = "label2";
+            // 
+            // BirthdayInfoLabel
+            // 
+            this.BirthdayInfoLabel.AutoSize = true;
+            this.BirthdayInfoLabel.Location = new System.Drawing.Point(95, 28);
+            this.BirthdayInfoLabel.Name = "BirthdayInfoLabel";
+            this.BirthdayInfoLabel.Size = new System.Drawing.Size(132, 13);
+            this.BirthdayInfoLabel.TabIndex = 1;
+            this.BirthdayInfoLabel.Text = "Сегодня день рождения:";
             // 
             // pictureBox1
             // 
@@ -391,24 +410,6 @@
             this.SurnameLabel.Size = new System.Drawing.Size(52, 13);
             this.SurnameLabel.TabIndex = 12;
             this.SurnameLabel.Text = "Surname:";
-            // 
-            // BirthdayInfoLabel
-            // 
-            this.BirthdayInfoLabel.AutoSize = true;
-            this.BirthdayInfoLabel.Location = new System.Drawing.Point(95, 28);
-            this.BirthdayInfoLabel.Name = "BirthdayInfoLabel";
-            this.BirthdayInfoLabel.Size = new System.Drawing.Size(132, 13);
-            this.BirthdayInfoLabel.TabIndex = 1;
-            this.BirthdayInfoLabel.Text = "Сегодня день рождения:";
-            // 
-            // BirthdayInfoContactsLabel
-            // 
-            this.BirthdayInfoContactsLabel.AutoSize = true;
-            this.BirthdayInfoContactsLabel.Location = new System.Drawing.Point(95, 41);
-            this.BirthdayInfoContactsLabel.Name = "BirthdayInfoContactsLabel";
-            this.BirthdayInfoContactsLabel.Size = new System.Drawing.Size(35, 13);
-            this.BirthdayInfoContactsLabel.TabIndex = 2;
-            this.BirthdayInfoContactsLabel.Text = "label2";
             // 
             // MainForm
             // 
