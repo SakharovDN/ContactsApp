@@ -73,7 +73,6 @@
             this.MaximizeBox = false;
             this.Name = "AboutForm";
             this.Text = "About";
-            this.Load += new System.EventHandler(this.AboutForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
