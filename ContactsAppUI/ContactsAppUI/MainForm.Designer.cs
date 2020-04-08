@@ -45,6 +45,8 @@
             this.ContactsListBox = new System.Windows.Forms.ListBox();
             this.FindTextBox = new System.Windows.Forms.TextBox();
             this.FindLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BirthdayTextBox = new System.Windows.Forms.TextBox();
             this.IDVKLabel = new System.Windows.Forms.Label();
             this.EmailLabel = new System.Windows.Forms.Label();
@@ -57,11 +59,15 @@
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.SurnameTextBox = new System.Windows.Forms.TextBox();
             this.SurnameLabel = new System.Windows.Forms.Label();
+            this.BirthdayInfoLabel = new System.Windows.Forms.Label();
+            this.BirthdayInfoContactsLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -154,6 +160,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Controls.Add(this.BirthdayTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.IDVKLabel);
             this.splitContainer1.Panel2.Controls.Add(this.EmailLabel);
@@ -224,6 +231,7 @@
             this.ContactsListBox.Size = new System.Drawing.Size(257, 355);
             this.ContactsListBox.TabIndex = 8;
             this.ContactsListBox.SelectedIndexChanged += new System.EventHandler(this.ContactsListBox_SelectedIndexChanged);
+            this.ContactsListBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ContactsListBox_KeyPress);
             // 
             // FindTextBox
             // 
@@ -243,6 +251,31 @@
             this.FindLabel.Size = new System.Drawing.Size(30, 13);
             this.FindLabel.TabIndex = 6;
             this.FindLabel.Text = "Find:";
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel1.Controls.Add(this.BirthdayInfoContactsLabel);
+            this.panel1.Controls.Add(this.BirthdayInfoLabel);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(3, 334);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(527, 92);
+            this.panel1.TabIndex = 24;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(4, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(85, 86);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // BirthdayTextBox
             // 
@@ -359,6 +392,24 @@
             this.SurnameLabel.TabIndex = 12;
             this.SurnameLabel.Text = "Surname:";
             // 
+            // BirthdayInfoLabel
+            // 
+            this.BirthdayInfoLabel.AutoSize = true;
+            this.BirthdayInfoLabel.Location = new System.Drawing.Point(95, 28);
+            this.BirthdayInfoLabel.Name = "BirthdayInfoLabel";
+            this.BirthdayInfoLabel.Size = new System.Drawing.Size(132, 13);
+            this.BirthdayInfoLabel.TabIndex = 1;
+            this.BirthdayInfoLabel.Text = "Сегодня день рождения:";
+            // 
+            // BirthdayInfoContactsLabel
+            // 
+            this.BirthdayInfoContactsLabel.AutoSize = true;
+            this.BirthdayInfoContactsLabel.Location = new System.Drawing.Point(95, 41);
+            this.BirthdayInfoContactsLabel.Name = "BirthdayInfoContactsLabel";
+            this.BirthdayInfoContactsLabel.Size = new System.Drawing.Size(35, 13);
+            this.BirthdayInfoContactsLabel.TabIndex = 2;
+            this.BirthdayInfoContactsLabel.Text = "label2";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -380,6 +431,9 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,6 +469,10 @@
         private System.Windows.Forms.TextBox SurnameTextBox;
         private System.Windows.Forms.Label SurnameLabel;
         private System.Windows.Forms.TextBox BirthdayTextBox;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label BirthdayInfoContactsLabel;
+        private System.Windows.Forms.Label BirthdayInfoLabel;
     }
 }
 

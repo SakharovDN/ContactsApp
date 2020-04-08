@@ -36,11 +36,7 @@ namespace ContactsApp
             _project = _projectManager.LoadFromFile(path);
             if (_project != null)
             {
-                foreach (Contact contact in _project.Contacts)
-                {
-                    indecis.Add(_project.Contacts.IndexOf(contact), _project.Contacts.IndexOf(contact));
-                    ContactsListBox.Items.Add($"{contact.Surname} {contact.Name}");
-                }
+                Rewriting();
             }
             else
             {
@@ -48,6 +44,7 @@ namespace ContactsApp
                 _project = new Project();
                 _project.Contacts = new List<Contact>();
             }
+            BirthdayContacts();
         }
 
         /// <summary>
@@ -61,7 +58,9 @@ namespace ContactsApp
             if (newContact != null)
             {
                 _project.Contacts.Add(newContact);
+                _project.Contacts = _project.SortedContacts();
                 Rewriting();
+                BirthdayContacts();
                 _projectManager.SaveToFile(_project, path);
             }
         }
@@ -84,8 +83,10 @@ namespace ContactsApp
                         if (result == DialogResult.OK)
                         {
                             _project.Contacts.RemoveAt(pair.Key);
+                            _project.Contacts = _project.SortedContacts();
                             ContactsListBox.SetSelected(selectedIndexListBox, false);
                             Rewriting();
+                            BirthdayContacts();
                             _projectManager.SaveToFile(_project, path);
                         }
                         break;
@@ -114,9 +115,10 @@ namespace ContactsApp
                         if (updatedContact != null)
                         {
                             _project.Contacts.RemoveAt(pair.Key);
-                            _project.Contacts.Insert(pair.Key, updatedContact);
+                            _project.Contacts.Add(updatedContact);
+                            _project.Contacts = _project.SortedContacts();
                             Rewriting();
-                            ContactsListBox.SetSelected(selectedIndexListBox, true);
+                            BirthdayContacts();
                             _projectManager.SaveToFile(_project, path);
                         }
                         break;
@@ -213,6 +215,9 @@ namespace ContactsApp
             Rewriting();
         }
 
+        /// <summary>
+        /// Метод, который полностью перепиывает ListBox и словарь indecis
+        /// </summary>
         private void Rewriting()
         {
             ContactsListBox.Items.Clear();
@@ -220,12 +225,45 @@ namespace ContactsApp
             string findname = _firstUppercaseLetter.ToTitleCase(FindTextBox.Text);
             foreach (Contact contact in _project.Contacts)
             {
+                int index = _project.Contacts.IndexOf(contact);
                 string fullname = $"{contact.Surname} {contact.Name}";
                 if (fullname.Contains(findname))
                 {
                     ContactsListBox.Items.Add(fullname);
                     indecis.Add(_project.Contacts.IndexOf(contact), ContactsListBox.Items.Count - 1);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Метод, который выводит список контактов, у которых сегодня день рождения
+        /// </summary>
+        private void BirthdayContacts()
+        {
+            var birthdayContacts = _project.BirthdayContacts(DateTime.Today);
+            string birthday = "";
+            if (birthdayContacts.Count == 0)
+                panel1.Visible = false;
+            else
+            {
+                for(int i = 0; i < birthdayContacts.Count; i++)
+                {
+                    if (i == 0)
+                        birthday = $"{birthdayContacts[i].Surname} {birthdayContacts[i].Name}";
+                    else
+                        birthday = $"{birthday}, {birthdayContacts[i].Surname} {birthdayContacts[i].Name}";
+                }
+                BirthdayInfoContactsLabel.Text = birthday;
+                panel1.Visible = true;
+            }
+        }
+
+        private void ContactsListBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char button = e.KeyChar;
+            if (button == (char)Keys.Delete)
+            {
+                RemoveContact();
             }
         }
     }
