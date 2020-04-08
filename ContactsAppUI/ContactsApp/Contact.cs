@@ -29,6 +29,9 @@ namespace ContactsApp
         /// </summary>
         private string _iDVK;
 
+        /// <summary>
+        /// Класс, который нужен для преобразования строк: первая буква в верхний регистр, остальные в нижний
+        /// </summary>
         private readonly TextInfo _firstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 
         /// <summary>

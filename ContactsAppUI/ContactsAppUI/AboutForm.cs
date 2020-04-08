@@ -9,10 +9,5 @@ namespace ContactsApp
         {
             InitializeComponent();
         }
-
-        private void AboutForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

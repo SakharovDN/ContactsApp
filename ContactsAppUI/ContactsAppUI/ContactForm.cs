@@ -46,6 +46,9 @@ namespace ContactsApp
             controls = new Control[] { SurnameTextBox, NameTextBox, BirthdayDateTimePicker, PhoneTextBox, EmailTextBox, IDVKTextBox };
         }
 
+        /// <summary>
+        /// Нажатие кнопки OK
+        /// </summary>
         private void OKButton_Click(object sender, EventArgs e)
         {
             SurnameTextBox.Focus();
@@ -59,11 +62,17 @@ namespace ContactsApp
                 DialogResult = DialogResult.OK;
         }
 
+        /// <summary>
+        /// Нажатие кнопки Cancel
+        /// </summary>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }
 
+        /// <summary>
+        /// Метод, позволяющий вводить в PhoneTextBox только цифры и клавишу Backspace
+        /// </summary>
         private void PhoneTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
@@ -71,6 +80,9 @@ namespace ContactsApp
                 e.Handled = true;
         }
 
+        /// <summary>
+        /// Метод, присваивающий фамилию
+        /// </summary>
         private void SurnameTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -84,6 +96,9 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Метод, присваивающий имя
+        /// </summary>
         private void NameTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -97,6 +112,9 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Метод, присваивающий день рождения
+        /// </summary>
         private void BirthdayDateTimePicker_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -110,6 +128,9 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Метод, присваивающий номер телефона
+        /// </summary>
         private void PhoneTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -128,11 +149,17 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Метод, присваивающий E-mail
+        /// </summary>
         private void EmailTextBox_Validating(object sender, CancelEventArgs e)
         {
             _contact.Email = EmailTextBox.Text;
         }
 
+        /// <summary>
+        /// Метод, присваивающий idVK
+        /// </summary>
         private void IDVKTextBox_Validating(object sender, CancelEventArgs e)
         {
             try
@@ -146,6 +173,9 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Метод, который проверяет наличие ошибок
+        /// </summary>
         private bool IsValid()
         {
             foreach (Control control in controls)

@@ -12,14 +12,24 @@ namespace ContactsApp
         /// </summary>
         private readonly string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ContactsApp.notes";
 
+        /// <summary>
+        /// Объект класса ProjectManager, с помощью которого контакты будут загружаться из файла и сохраняться в файл
+        /// </summary>
         private ProjectManager _projectManager = new ProjectManager();
 
+        /// <summary>
+        /// Объект класса Project, в котором хранится список всех существующих контактов
+        /// </summary>
         private Project _project = new Project();
 
+        /// <summary>
+        /// Класс, который нужен для преобразования строк: первая буква в верхний регистр, остальные в нижний
+        /// </summary>
         private readonly TextInfo _firstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 
         /// <summary>
-        /// В словаре indecis хранятся индексы, необходимые для реализации создания, редактирования и удаления контакта во время использования поиска
+        /// В словаре indecis хранятся индексы, необходимые для реализации создания, 
+        /// редактирования и удаления контакта во время использования поиска
         /// </summary>
         private Dictionary<int, int> indecis = new Dictionary<int, int>();
 
@@ -37,7 +47,7 @@ namespace ContactsApp
             if (_project != null)
             {
                 _project.Contacts = _project.SortedContacts();
-                Rewriting();
+                Rewrite();
                 BirthdayContacts();
             }
             else
@@ -60,7 +70,7 @@ namespace ContactsApp
             {
                 _project.Contacts.Add(newContact);
                 _project.Contacts = _project.SortedContacts();
-                Rewriting();
+                Rewrite();
                 BirthdayContacts();
                 _projectManager.SaveToFile(_project, path);
             }
@@ -86,7 +96,7 @@ namespace ContactsApp
                             _project.Contacts.RemoveAt(pair.Key);
                             _project.Contacts = _project.SortedContacts();
                             ContactsListBox.SetSelected(selectedIndexListBox, false);
-                            Rewriting();
+                            Rewrite();
                             BirthdayContacts();
                             _projectManager.SaveToFile(_project, path);
                         }
@@ -118,7 +128,7 @@ namespace ContactsApp
                             _project.Contacts.RemoveAt(pair.Key);
                             _project.Contacts.Add(updatedContact);
                             _project.Contacts = _project.SortedContacts();
-                            Rewriting();
+                            Rewrite();
                             BirthdayContacts();
                             _projectManager.SaveToFile(_project, path);
                         }
@@ -128,31 +138,49 @@ namespace ContactsApp
             }
         }
        
+        /// <summary>
+        /// Нажатие кнопки "Добавить контакт"
+        /// </summary>
         private void AddContactButton_Click(object sender, EventArgs e)
         {
             AddContact();
         }
 
+        /// <summary>
+        /// Нажатие кнопки "Удалить контакт"
+        /// </summary>
         private void RemoveContactButton_Click(object sender, EventArgs e)
         {
             RemoveContact();
         }
 
+        /// <summary>
+        /// Нажатие кнопки "Редактировать контакт"
+        /// </summary>
         private void EditContactButton_Click(object sender, EventArgs e)
         {
             EditContact();
         }
 
+        /// <summary>
+        /// Нажатие кнопки "Добавить контакт" в menuStrip
+        /// </summary>
         private void addContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddContact();
         }
 
+        /// <summary>
+        /// Нажатие кнопки "Удалить контакт" в menuStrip
+        /// </summary>
         private void removeContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RemoveContact();
         }
 
+        /// <summary>
+        /// Нажатие кнопки "Редактировать контакт" в menuStrip
+        /// </summary>
         private void editContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditContact();
@@ -192,17 +220,28 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Нажатие кнопки "Выход" в menuStrip
+        /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Нажатие кнопки "О программе" в menuStrip. Вызывает форму AboutForm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var aboutForm = new AboutForm();
             aboutForm.ShowDialog();
         }
 
+        /// <summary>
+        /// Перед закрытием формы все контакты сохраняются в файл
+        /// </summary>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _projectManager.SaveToFile(_project, path);
@@ -213,13 +252,13 @@ namespace ContactsApp
         /// </summary>
         private void FindTextBox_TextChanged(object sender, EventArgs e)
         {
-            Rewriting();
+            Rewrite();
         }
 
         /// <summary>
         /// Метод, который полностью перепиывает ListBox и словарь indecis
         /// </summary>
-        private void Rewriting()
+        private void Rewrite()
         {
             ContactsListBox.Items.Clear();
             indecis.Clear();
@@ -259,6 +298,9 @@ namespace ContactsApp
             }
         }
 
+        /// <summary>
+        /// Метод, позволяющий удалять контакт с помощью клавиши Delete
+        /// </summary>
         private void ContactsListBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
