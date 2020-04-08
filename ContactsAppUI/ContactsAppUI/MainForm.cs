@@ -36,6 +36,7 @@ namespace ContactsApp
             _project = _projectManager.LoadFromFile(path);
             if (_project != null)
             {
+                _project.Contacts = _project.SortedContacts();
                 Rewriting();
                 BirthdayContacts();
             }
@@ -223,13 +224,14 @@ namespace ContactsApp
             ContactsListBox.Items.Clear();
             indecis.Clear();
             string findname = _firstUppercaseLetter.ToTitleCase(FindTextBox.Text);
-            foreach (Contact contact in _project.Contacts)
+            for (int i = 0; i < _project.Contacts.Count; i++)
             {
+                var contact = _project.Contacts[i];
                 string fullname = $"{contact.Surname} {contact.Name}";
                 if (fullname.Contains(findname))
                 {
                     ContactsListBox.Items.Add(fullname);
-                    indecis.Add(_project.Contacts.IndexOf(contact), ContactsListBox.Items.Count - 1);
+                    indecis.Add(i, ContactsListBox.Items.Count - 1);
                 }
             }
         }
