@@ -39,9 +39,11 @@ namespace ContactsApp
 
         public bool Equals(Project other)
         {
+            //TODO: лучше инвертировать условие для уменьшения вложенности и повышения читаемости. Если количество не равно, то сразу вернуть false
             if (other.Contacts.Count == this.Contacts.Count)
                 for (int i = 0; i < other.Contacts.Count; i++)
                 {
+                    //TODO: лучше инвертировать условие. Если не равны, то сразу вернуть false.
                     if (other.Contacts[i].Equals(this.Contacts[i]))
                         continue;
                     else

@@ -113,6 +113,7 @@ namespace ContactsApp
         {
             var editContactForm = new ContactForm();
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
+            //TODO: лучше инвертировать условие, чтобы вложенность была меньше, а код читаемее
             if (selectedIndexListBox != -1)
             {
                 foreach (var pair in indecis)
@@ -136,8 +137,9 @@ namespace ContactsApp
                     }
                 }
             }
+            //TODO: после редактирования контакта на правой панели остаются данные не отредактированного контакта
         }
-       
+
         /// <summary>
         /// Нажатие кнопки "Добавить контакт"
         /// </summary>
@@ -269,6 +271,7 @@ namespace ContactsApp
                 string fullname = $"{contact.Surname} {contact.Name}";
                 if (fullname.Contains(findname))
                 {
+                    //TODO: должен ли работать поиск по подстроке (середине фамилии, имени)? Если да, то у меня не работает. Если нет, то для цифр в имени работает
                     ContactsListBox.Items.Add(fullname);
                     indecis.Add(i, ContactsListBox.Items.Count - 1);
                 }
@@ -282,11 +285,14 @@ namespace ContactsApp
         {
             var birthdayContacts = _project.BirthdayContacts(DateTime.Today);
             string birthday = "";
+            //TODO: вместо отдельных строк присвоения true и false можно сразу здесь присвоить результат сравнения с Count
             if (birthdayContacts.Count == 0)
                 panel1.Visible = false;
             else
             {
-                for(int i = 0; i < birthdayContacts.Count; i++)
+                //TODO: вместо for попробуй использовать Select для создания строк с фамилией-именем именниника,
+                // а с помощью string.Join объединить их в одну строку. Тогда вместо цикла будет две простых читаемых строки
+                for (int i = 0; i < birthdayContacts.Count; i++)
                 {
                     if (i == 0)
                         birthday = $"{birthdayContacts[i].Surname} {birthdayContacts[i].Name}";

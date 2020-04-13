@@ -11,8 +11,10 @@ namespace ContactsApp.UnitTests
     class ProjectTest
     {
         private Project _project;
+        //TODO: лучше сделать локальной переменной
         private Contact _contact;
 
+        //TODO: сетап для одного теста смысла делать нет, к тому же большая часть инициализации осталась в самом тесте
         [SetUp]
         public void InitProject()
         {

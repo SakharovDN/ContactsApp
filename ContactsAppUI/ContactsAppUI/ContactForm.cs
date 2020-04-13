@@ -6,6 +6,7 @@ namespace ContactsApp
 {
     public partial class ContactForm : Form
     {
+        //TODO: плохое название, так как в любой форме и контроле уже есть свойство Controls. Плюс именование нарушаем RSDN. Переименовать.
         /// <summary>
         /// Массив, в котором содержатся объекты (все TextBox'ы и DateTimePicker)
         /// </summary>
@@ -36,6 +37,7 @@ namespace ContactsApp
                 PhoneTextBox.Text = value.Number.Number.ToString();
                 EmailTextBox.Text = value.Email;
                 IDVKTextBox.Text = value.IDVK;
+                //TODO: правильнее сначала помещать данные в поля/свойства/БД, а потом обновлять интерфейс - на случай проверок и потенциальных ошибок при помещении значения в свойство/БД
                 _contact = value;
             }
         }
@@ -88,6 +90,7 @@ namespace ContactsApp
             try
             {
                 _contact.Surname = SurnameTextBox.Text;
+                //TODO: убрать единицу из названия элемента
                 errorProvider1.SetError(SurnameTextBox, "");
             }
             catch (ArgumentException exception)
