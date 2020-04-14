@@ -4,16 +4,15 @@ using System.IO;
 
 namespace ContactsApp
 {
-    //TODO: класс и его методы должны быть статическими, так как два экземпляра менеджера тебе ни к чему
     /// <summary>
     /// Класс менеджера проекта, позволяющий сохранить в файл или загрузить из файла информацию о всех контактах
     /// </summary>
-    public class ProjectManager
+    static public class ProjectManager
     {
         /// <summary>
         /// Метод загрузки информации о всех контактах из файла
         /// </summary>
-        public Project LoadFromFile(string path)
+        static public Project LoadFromFile(string path)
         {
             if (!File.Exists(path))
                 return null;
@@ -30,7 +29,7 @@ namespace ContactsApp
         /// <summary>
         /// Метод сохранения информации о всех контактах в файл
         /// </summary>
-        public void SaveToFile(Project project, string path)
+        static public void SaveToFile(Project project, string path)
         {
             if (!File.Exists(path))
                 using (FileStream fs = File.Create(path)) { }

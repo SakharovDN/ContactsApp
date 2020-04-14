@@ -26,12 +26,12 @@ namespace ContactsApp
         /// <summary>
         /// Возвращает список контактов, у которых сегодня день рождения
         /// </summary>
-        public List<Contact> BirthdayContacts(DateTime today)
+        public List<Contact> BirthdayContacts(DateTime date)
         {
             var birthdayContacts = new List<Contact>();
             foreach (var contact in Contacts)
             {
-                if (contact.Birthday.Month == today.Month && contact.Birthday.Day == today.Day)
+                if (contact.Birthday.Month == date.Month && contact.Birthday.Day == date.Day)
                     birthdayContacts.Add(contact);
             }
             return birthdayContacts;
@@ -39,18 +39,13 @@ namespace ContactsApp
 
         public bool Equals(Project other)
         {
-            //TODO: лучше инвертировать условие для уменьшения вложенности и повышения читаемости. Если количество не равно, то сразу вернуть false
-            if (other.Contacts.Count == this.Contacts.Count)
-                for (int i = 0; i < other.Contacts.Count; i++)
-                {
-                    //TODO: лучше инвертировать условие. Если не равны, то сразу вернуть false.
-                    if (other.Contacts[i].Equals(this.Contacts[i]))
-                        continue;
-                    else
-                        return false;
-                }
-            else
+            if (other.Contacts.Count != this.Contacts.Count)
                 return false;
+            for (int i = 0; i < other.Contacts.Count; i++)
+            {
+                if (!other.Contacts[i].Equals(this.Contacts[i]))
+                    return false;
+            }
             return true;
         }
     }

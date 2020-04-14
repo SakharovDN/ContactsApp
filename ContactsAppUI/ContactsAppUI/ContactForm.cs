@@ -6,11 +6,10 @@ namespace ContactsApp
 {
     public partial class ContactForm : Form
     {
-        //TODO: плохое название, так как в любой форме и контроле уже есть свойство Controls. Плюс именование нарушаем RSDN. Переименовать.
         /// <summary>
         /// Массив, в котором содержатся объекты (все TextBox'ы и DateTimePicker)
         /// </summary>
-        private Control[] controls;
+        private Control[] _elements;
 
         /// <summary>
         /// Контакт
@@ -31,21 +30,20 @@ namespace ContactsApp
             }
             set
             {
+                _contact = value;
                 SurnameTextBox.Text = value.Surname;
                 NameTextBox.Text = value.Name;
                 BirthdayDateTimePicker.Value = value.Birthday;
                 PhoneTextBox.Text = value.Number.Number.ToString();
                 EmailTextBox.Text = value.Email;
                 IDVKTextBox.Text = value.IDVK;
-                //TODO: правильнее сначала помещать данные в поля/свойства/БД, а потом обновлять интерфейс - на случай проверок и потенциальных ошибок при помещении значения в свойство/БД
-                _contact = value;
             }
         }
 
         public ContactForm()
         {
             InitializeComponent();
-            controls = new Control[] { SurnameTextBox, NameTextBox, BirthdayDateTimePicker, PhoneTextBox, EmailTextBox, IDVKTextBox };
+            _elements = new Control[] { SurnameTextBox, NameTextBox, BirthdayDateTimePicker, PhoneTextBox, EmailTextBox, IDVKTextBox };
         }
 
         /// <summary>
@@ -90,12 +88,11 @@ namespace ContactsApp
             try
             {
                 _contact.Surname = SurnameTextBox.Text;
-                //TODO: убрать единицу из названия элемента
-                errorProvider1.SetError(SurnameTextBox, "");
+                errorProvider.SetError(SurnameTextBox, "");
             }
             catch (ArgumentException exception)
             {
-                errorProvider1.SetError(SurnameTextBox, exception.Message);
+                errorProvider.SetError(SurnameTextBox, exception.Message);
             }
         }
 
@@ -107,11 +104,11 @@ namespace ContactsApp
             try
             {
                 _contact.Name = NameTextBox.Text;
-                errorProvider1.SetError(NameTextBox, "");
+                errorProvider.SetError(NameTextBox, "");
             }
             catch (ArgumentException exception)
             {
-                errorProvider1.SetError(NameTextBox, exception.Message);
+                errorProvider.SetError(NameTextBox, exception.Message);
             }
         }
 
@@ -123,11 +120,11 @@ namespace ContactsApp
             try
             {
                 _contact.Birthday = BirthdayDateTimePicker.Value;
-                errorProvider1.SetError(BirthdayDateTimePicker, "");
+                errorProvider.SetError(BirthdayDateTimePicker, "");
             }
             catch (ArgumentException exception)
             {
-                errorProvider1.SetError(BirthdayDateTimePicker, exception.Message);
+                errorProvider.SetError(BirthdayDateTimePicker, exception.Message);
             }
         }
 
@@ -140,15 +137,15 @@ namespace ContactsApp
             {
                 _contact.Number = new PhoneNumber();
                 _contact.Number.Number = long.Parse(PhoneTextBox.Text);
-                errorProvider1.SetError(PhoneTextBox, "");
+                errorProvider.SetError(PhoneTextBox, "");
             }
             catch (ArgumentException exception)
             {
-                errorProvider1.SetError(PhoneTextBox, exception.Message);
+                errorProvider.SetError(PhoneTextBox, exception.Message);
             }
             catch (FormatException)
             {
-                errorProvider1.SetError(PhoneTextBox, "Введите номер телефона");
+                errorProvider.SetError(PhoneTextBox, "Введите номер телефона");
             }
         }
 
@@ -168,11 +165,11 @@ namespace ContactsApp
             try
             {
                 _contact.IDVK = IDVKTextBox.Text;
-                errorProvider1.SetError(IDVKTextBox, "");
+                errorProvider.SetError(IDVKTextBox, "");
             }
             catch (ArgumentException exception)
             {
-                errorProvider1.SetError(IDVKTextBox, exception.Message);
+                errorProvider.SetError(IDVKTextBox, exception.Message);
             }
         }
 
@@ -181,8 +178,8 @@ namespace ContactsApp
         /// </summary>
         private bool IsValid()
         {
-            foreach (Control control in controls)
-                if (errorProvider1.GetError(control) != "")
+            foreach (Control control in _elements)
+                if (errorProvider.GetError(control) != "")
                     return false;
             return true;
         }

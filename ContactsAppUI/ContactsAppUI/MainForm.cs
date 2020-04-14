@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Linq;
 
 namespace ContactsApp
 {
@@ -13,19 +14,9 @@ namespace ContactsApp
         private readonly string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ContactsApp.notes";
 
         /// <summary>
-        /// Объект класса ProjectManager, с помощью которого контакты будут загружаться из файла и сохраняться в файл
-        /// </summary>
-        private ProjectManager _projectManager = new ProjectManager();
-
-        /// <summary>
         /// Объект класса Project, в котором хранится список всех существующих контактов
         /// </summary>
         private Project _project = new Project();
-
-        /// <summary>
-        /// Класс, который нужен для преобразования строк: первая буква в верхний регистр, остальные в нижний
-        /// </summary>
-        private readonly TextInfo _firstUppercaseLetter = CultureInfo.CurrentCulture.TextInfo;
 
         /// <summary>
         /// В словаре indecis хранятся индексы, необходимые для реализации создания, 
@@ -43,7 +34,7 @@ namespace ContactsApp
         /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _project = _projectManager.LoadFromFile(path);
+            _project = ProjectManager.LoadFromFile(path);
             if (_project != null)
             {
                 _project.Contacts = _project.SortedContacts();
@@ -72,7 +63,7 @@ namespace ContactsApp
                 _project.Contacts = _project.SortedContacts();
                 Rewrite();
                 BirthdayContacts();
-                _projectManager.SaveToFile(_project, path);
+                ProjectManager.SaveToFile(_project, path);
             }
         }
 
@@ -82,26 +73,25 @@ namespace ContactsApp
         private void RemoveContact()
         {
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
-            if (selectedIndexListBox != -1)
+            if (selectedIndexListBox == -1)
+                return;
+            foreach (var pair in indecis)
             {
-                foreach (var pair in indecis)
+                if (selectedIndexListBox == pair.Value)
                 {
-                    if (selectedIndexListBox == pair.Value)
+                    var selectedContact = _project.Contacts[pair.Key];
+                    DialogResult result = MessageBox.Show($"Do you really want to remove this contact: {selectedContact.Surname} {selectedContact.Name}?",
+                        "Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (result == DialogResult.OK)
                     {
-                        var selectedContact = _project.Contacts[pair.Key];
-                        DialogResult result = MessageBox.Show($"Do you really want to remove this contact: {selectedContact.Surname} {selectedContact.Name}?",
-                            "Removing contact", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                        if (result == DialogResult.OK)
-                        {
-                            _project.Contacts.RemoveAt(pair.Key);
-                            _project.Contacts = _project.SortedContacts();
-                            ContactsListBox.SetSelected(selectedIndexListBox, false);
-                            Rewrite();
-                            BirthdayContacts();
-                            _projectManager.SaveToFile(_project, path);
-                        }
-                        break;
+                        _project.Contacts.RemoveAt(pair.Key);
+                        _project.Contacts = _project.SortedContacts();
+                        ContactsListBox.SetSelected(selectedIndexListBox, false);
+                        Rewrite();
+                        BirthdayContacts();
+                        ProjectManager.SaveToFile(_project, path);
                     }
+                    break;
                 }
             }
         }
@@ -111,33 +101,36 @@ namespace ContactsApp
         /// </summary>
         private void EditContact()
         {
-            var editContactForm = new ContactForm();
             var selectedIndexListBox = ContactsListBox.SelectedIndex;
-            //TODO: лучше инвертировать условие, чтобы вложенность была меньше, а код читаемее
-            if (selectedIndexListBox != -1)
+            if (selectedIndexListBox == -1)
+                return;
+            var updatedContact = new Contact();
+            foreach (var pair in indecis)
             {
-                foreach (var pair in indecis)
+                if (selectedIndexListBox == pair.Value)
                 {
-                    if (selectedIndexListBox == pair.Value)
+                    var editContactForm = new ContactForm();
+                    var selectedContact = _project.Contacts[pair.Key];
+                    editContactForm.Contact = selectedContact;
+                    editContactForm.ShowDialog();
+                    updatedContact = editContactForm.Contact;
+                    if (updatedContact != null)
                     {
-                        var selectedContact = _project.Contacts[pair.Key];
-                        editContactForm.Contact = selectedContact;
-                        editContactForm.ShowDialog();
-                        var updatedContact = editContactForm.Contact;
-                        if (updatedContact != null)
-                        {
-                            _project.Contacts.RemoveAt(pair.Key);
-                            _project.Contacts.Add(updatedContact);
-                            _project.Contacts = _project.SortedContacts();
-                            Rewrite();
-                            BirthdayContacts();
-                            _projectManager.SaveToFile(_project, path);
-                        }
-                        break;
+                        _project.Contacts.RemoveAt(pair.Key);
+                        _project.Contacts.Add(updatedContact);
+                        _project.Contacts = _project.SortedContacts();
+                        Rewrite();
+                        BirthdayContacts();
+                        ProjectManager.SaveToFile(_project, path);
                     }
+                    break;
                 }
             }
-            //TODO: после редактирования контакта на правой панели остаются данные не отредактированного контакта
+            foreach (var pair in indecis)
+            {
+                if (_project.Contacts.IndexOf(updatedContact) == pair.Key)
+                    ContactsListBox.SetSelected(pair.Value, true);
+            }
         }
 
         /// <summary>
@@ -233,8 +226,6 @@ namespace ContactsApp
         /// <summary>
         /// Нажатие кнопки "О программе" в menuStrip. Вызывает форму AboutForm
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var aboutForm = new AboutForm();
@@ -246,7 +237,7 @@ namespace ContactsApp
         /// </summary>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _projectManager.SaveToFile(_project, path);
+            ProjectManager.SaveToFile(_project, path);
         }
 
         /// <summary>
@@ -264,14 +255,14 @@ namespace ContactsApp
         {
             ContactsListBox.Items.Clear();
             indecis.Clear();
-            string findname = _firstUppercaseLetter.ToTitleCase(FindTextBox.Text);
+            string findname = FindTextBox.Text;
             for (int i = 0; i < _project.Contacts.Count; i++)
             {
                 var contact = _project.Contacts[i];
                 string fullname = $"{contact.Surname} {contact.Name}";
-                if (fullname.Contains(findname))
+
+                if (fullname.ToLower().Contains(findname))
                 {
-                    //TODO: должен ли работать поиск по подстроке (середине фамилии, имени)? Если да, то у меня не работает. Если нет, то для цифр в имени работает
                     ContactsListBox.Items.Add(fullname);
                     indecis.Add(i, ContactsListBox.Items.Count - 1);
                 }
@@ -284,24 +275,11 @@ namespace ContactsApp
         private void BirthdayContacts()
         {
             var birthdayContacts = _project.BirthdayContacts(DateTime.Today);
-            string birthday = "";
-            //TODO: вместо отдельных строк присвоения true и false можно сразу здесь присвоить результат сравнения с Count
-            if (birthdayContacts.Count == 0)
-                panel1.Visible = false;
-            else
-            {
-                //TODO: вместо for попробуй использовать Select для создания строк с фамилией-именем именниника,
-                // а с помощью string.Join объединить их в одну строку. Тогда вместо цикла будет две простых читаемых строки
-                for (int i = 0; i < birthdayContacts.Count; i++)
-                {
-                    if (i == 0)
-                        birthday = $"{birthdayContacts[i].Surname} {birthdayContacts[i].Name}";
-                    else
-                        birthday = $"{birthday}, {birthdayContacts[i].Surname} {birthdayContacts[i].Name}";
-                }
-                BirthdayInfoContactsLabel.Text = birthday;
-                panel1.Visible = true;
-            }
+            panel1.Visible = (birthdayContacts.Count != 0);
+            var contactNames = from contact in birthdayContacts
+                               select $"{contact.Surname} {contact.Name}";
+            string birthday = string.Join(", ", contactNames);
+            BirthdayInfoContactsLabel.Text = birthday;
         }
 
         /// <summary>
