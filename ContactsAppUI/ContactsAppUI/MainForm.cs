@@ -261,7 +261,7 @@ namespace ContactsApp
                 var contact = _project.Contacts[i];
                 string fullname = $"{contact.Surname} {contact.Name}";
 
-                if (fullname.ToLower().Contains(findname))
+                if (fullname.ToLower().Contains(findname.ToLower()))
                 {
                     ContactsListBox.Items.Add(fullname);
                     indecis.Add(i, ContactsListBox.Items.Count - 1);

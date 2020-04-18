@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>IconContact.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -103,5 +109,22 @@
       <Name>ContactsApp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="IconContact.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>md $(SolutionDir)InstallScripts\Release
+md $(SolutionDir)InstallScripts\Installers
+xcopy $(ProjectDir)$(OutDir)*.dll $(SolutionDir)InstallScripts\Release
+xcopy $(ProjectDir)$(OutDir)*.exe $(SolutionDir)InstallScripts\Release
+xcopy $(ProjectDir)images\IconContact.ico $(SolutionDir)InstallScripts
+"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "$(SolutionDir)InstallScripts\installer.iss"
+rd /s /q $(SolutionDir)InstallScripts\Release
+erase $(SolutionDir)InstallScripts\IconContact.ico</PostBuildEvent>
+  </PropertyGroup>
 </Project>

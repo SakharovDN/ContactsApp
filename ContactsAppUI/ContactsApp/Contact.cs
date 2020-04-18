@@ -53,6 +53,9 @@ namespace ContactsApp
                 }
                 else
                 _surname = _firstUppercaseLetter.ToTitleCase(value);
+                _surname = _surname.Trim();
+                _surname = System.Text.RegularExpressions.Regex.Replace(_surname, @"\s+", " ");
+
             }
         }
 
@@ -75,6 +78,8 @@ namespace ContactsApp
                 }
                 else
                 _name = _firstUppercaseLetter.ToTitleCase(value);
+                _name = _name.Trim();
+                _name = System.Text.RegularExpressions.Regex.Replace(_name, @"\s+", " ");
             }
         }
 
