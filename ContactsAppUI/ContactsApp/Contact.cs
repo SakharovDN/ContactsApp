@@ -43,18 +43,17 @@ namespace ContactsApp
 
             set
             {
-                if(value.Length == 0)
+                _surname = value.Trim();
+                _surname = System.Text.RegularExpressions.Regex.Replace(_surname, @"\s+", " ");
+                _surname = _firstUppercaseLetter.ToTitleCase(_surname);
+                if (_surname.Length == 0 || _surname == " ")
                 {
                     throw new ArgumentException("Введите фамилию");
                 }
-                if (value.Length > 50)
+                if (_surname.Length > 50)
                 {
                     throw new ArgumentException("Фамилия не должна превышать 50 символов");
                 }
-                else
-                _surname = _firstUppercaseLetter.ToTitleCase(value);
-                _surname = _surname.Trim();
-                _surname = System.Text.RegularExpressions.Regex.Replace(_surname, @"\s+", " ");
 
             }
         }
@@ -68,18 +67,17 @@ namespace ContactsApp
 
             set
             {
-                if (value.Length == 0)
+                _name = value.Trim();
+                _name = System.Text.RegularExpressions.Regex.Replace(_name, @"\s+", " ");
+                _name = _firstUppercaseLetter.ToTitleCase(_name);
+                if (_name.Length == 0 || _name == " ")
                 {
                     throw new ArgumentException("Введите имя");
                 }
-                if (value.Length > 50)
+                if (_name.Length > 50)
                 {
                     throw new ArgumentException("Фамилия не должна превышать 50 символов");
                 }
-                else
-                _name = _firstUppercaseLetter.ToTitleCase(value);
-                _name = _name.Trim();
-                _name = System.Text.RegularExpressions.Regex.Replace(_name, @"\s+", " ");
             }
         }
 
